@@ -29,24 +29,22 @@ namespace CSharp_CaroGame
             username = textBox_usernmae.Text;
             password = textBox_password.Text;
             string query = "SELECT username,password FROM `user` WHERE `username` = '" + username + "' AND `password`= '" + password + "'";
-            try
+            cmd = new MySqlCommand(query, conn);
+            reader = cmd.ExecuteReader();
+            if (reader.Read())
             {
-                cmd = new MySqlCommand(query, conn);
-                reader = cmd.ExecuteReader();
-                if (reader.Read())
-                {
-                    this.Hide();
-                    Form_CoCaRo frm_caro = new Form_CoCaRo();
-                    frm_caro.initForm(username);
-                    frm_caro.Closed += (s, args) => this.Close();
-                    frm_caro.Show();
-                }
-
+                this.Hide();
+                Form_CoCaRo frm_caro = new Form_CoCaRo();
+                frm_caro.initForm(username);
+                frm_caro.Closed += (s, args) => this.Close();
+                frm_caro.Show();
             }
-            catch (Exception ex)
+            else
             {
                 MessageBox.Show("Info not valid. Please input again");
             }
+
         }
     }
 }
+
