@@ -2,9 +2,9 @@ C:\Users\ASUS\source\repos\CSharp_CaroGame\CSharp_CaroGame\bin\Debug\CSharp_Caro
 C:\Users\ASUS\source\repos\CSharp_CaroGame\CSharp_CaroGame\bin\Debug\CSharp_CaroGame.exe
 C:\Users\ASUS\source\repos\CSharp_CaroGame\CSharp_CaroGame\bin\Debug\CSharp_CaroGame.pdb
 C:\Users\ASUS\source\repos\CSharp_CaroGame\CSharp_CaroGame\obj\Debug\CSharp_CaroGame.csprojAssemblyReference.cache
-C:\Users\ASUS\source\repos\CSharp_CaroGame\CSharp_CaroGame\obj\Debug\CSharp_CaroGame.Form1.resources
 C:\Users\ASUS\source\repos\CSharp_CaroGame\CSharp_CaroGame\obj\Debug\CSharp_CaroGame.Properties.Resources.resources
 C:\Users\ASUS\source\repos\CSharp_CaroGame\CSharp_CaroGame\obj\Debug\CSharp_CaroGame.csproj.GenerateResource.cache
 C:\Users\ASUS\source\repos\CSharp_CaroGame\CSharp_CaroGame\obj\Debug\CSharp_CaroGame.csproj.CoreCompileInputs.cache
 C:\Users\ASUS\source\repos\CSharp_CaroGame\CSharp_CaroGame\obj\Debug\CSharp_CaroGame.exe
 C:\Users\ASUS\source\repos\CSharp_CaroGame\CSharp_CaroGame\obj\Debug\CSharp_CaroGame.pdb
+C:\Users\ASUS\source\repos\CSharp_CaroGame\CSharp_CaroGame\obj\Debug\CSharp_CaroGame.Form_CoCaRo.resources

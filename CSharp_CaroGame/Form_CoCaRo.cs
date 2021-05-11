@@ -10,22 +10,23 @@ using System.Windows.Forms;
 
 namespace CSharp_CaroGame
 {
-    public partial class Form1 : Form
+    public partial class Form_CoCaRo : Form
     {
-        public Form1()
+        private Caro_Control Control;
+        private Graphics grap;
+        public Form_CoCaRo()
         {
             InitializeComponent();
+            Control = new Caro_Control();
+            grap = panel_banco.CreateGraphics();
+            textBox_host.Text = "127.0.0.1";
+            textBox_port.Text = "8080";
 
         }
 
         private void thoátToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void chơiTrongLANIPToolStripMenuItem_Click(object sender, EventArgs e)
@@ -47,6 +48,16 @@ namespace CSharp_CaroGame
             textBox_host.Enabled = false;
             textBox_port.Enabled = false;
             button_connect.Enabled = false;
+        }
+
+        private void Form_CoCaRo_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Draw_Panel_Paint(object sender, PaintEventArgs e)
+        {
+            Control.VeBanCo(grap);
         }
     }
 }

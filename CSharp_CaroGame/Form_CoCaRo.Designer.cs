@@ -1,7 +1,7 @@
 ﻿
 namespace CSharp_CaroGame
 {
-    partial class Form1
+    partial class Form_CoCaRo
     {
         /// <summary>
         /// Required designer variable.
@@ -34,6 +34,7 @@ namespace CSharp_CaroGame
             this.vánMớiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.đánhVơiNgườiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.đánhVớiMáyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.chơiTrongLANIPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.thoátToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,7 +50,7 @@ namespace CSharp_CaroGame
             this.button_connect = new System.Windows.Forms.Button();
             this.textBox_port = new System.Windows.Forms.TextBox();
             this.label_port = new System.Windows.Forms.Label();
-            this.chơiTrongLANIPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panel_banco = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -63,7 +64,7 @@ namespace CSharp_CaroGame
             this.thôngTinToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1236, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1056, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -84,27 +85,34 @@ namespace CSharp_CaroGame
             this.chơiTrongLANIPToolStripMenuItem});
             this.vánMớiToolStripMenuItem.Name = "vánMớiToolStripMenuItem";
             this.vánMớiToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.vánMớiToolStripMenuItem.Text = "Ván mới";
+            this.vánMớiToolStripMenuItem.Text = "New game";
             // 
             // đánhVơiNgườiToolStripMenuItem
             // 
             this.đánhVơiNgườiToolStripMenuItem.Name = "đánhVơiNgườiToolStripMenuItem";
             this.đánhVơiNgườiToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.đánhVơiNgườiToolStripMenuItem.Text = "Đánh với người";
+            this.đánhVơiNgườiToolStripMenuItem.Text = "PvP";
             this.đánhVơiNgườiToolStripMenuItem.Click += new System.EventHandler(this.đánhVơiNgườiToolStripMenuItem_Click);
             // 
             // đánhVớiMáyToolStripMenuItem
             // 
             this.đánhVớiMáyToolStripMenuItem.Name = "đánhVớiMáyToolStripMenuItem";
             this.đánhVớiMáyToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.đánhVớiMáyToolStripMenuItem.Text = "Đánh với máy";
+            this.đánhVớiMáyToolStripMenuItem.Text = "Play with computer";
             this.đánhVớiMáyToolStripMenuItem.Click += new System.EventHandler(this.đánhVớiMáyToolStripMenuItem_Click);
+            // 
+            // chơiTrongLANIPToolStripMenuItem
+            // 
+            this.chơiTrongLANIPToolStripMenuItem.Name = "chơiTrongLANIPToolStripMenuItem";
+            this.chơiTrongLANIPToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.chơiTrongLANIPToolStripMenuItem.Text = "Chơi trong LAN IP";
+            this.chơiTrongLANIPToolStripMenuItem.Click += new System.EventHandler(this.chơiTrongLANIPToolStripMenuItem_Click);
             // 
             // thoátToolStripMenuItem
             // 
             this.thoátToolStripMenuItem.Name = "thoátToolStripMenuItem";
             this.thoátToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.thoátToolStripMenuItem.Text = "Thoát";
+            this.thoátToolStripMenuItem.Text = "Exit";
             this.thoátToolStripMenuItem.Click += new System.EventHandler(this.thoátToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
@@ -119,13 +127,13 @@ namespace CSharp_CaroGame
             // undoToolStripMenuItem
             // 
             this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(128, 26);
             this.undoToolStripMenuItem.Text = "Undo";
             // 
             // redoToolStripMenuItem
             // 
             this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
-            this.redoToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(128, 26);
             this.redoToolStripMenuItem.Text = "Redo";
             // 
             // thôngTinToolStripMenuItem
@@ -134,27 +142,27 @@ namespace CSharp_CaroGame
             this.luậtChơiToolStripMenuItem,
             this.aboutToolStripMenuItem});
             this.thôngTinToolStripMenuItem.Name = "thôngTinToolStripMenuItem";
-            this.thôngTinToolStripMenuItem.Size = new System.Drawing.Size(86, 24);
-            this.thôngTinToolStripMenuItem.Text = "Thông tin";
+            this.thôngTinToolStripMenuItem.Size = new System.Drawing.Size(49, 24);
+            this.thôngTinToolStripMenuItem.Text = "Info";
             // 
             // luậtChơiToolStripMenuItem
             // 
             this.luậtChơiToolStripMenuItem.Name = "luậtChơiToolStripMenuItem";
             this.luậtChơiToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.luậtChơiToolStripMenuItem.Text = "Luật chơi";
+            this.luậtChơiToolStripMenuItem.Text = "How to play?";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
             this.aboutToolStripMenuItem.Text = "About";
             // 
             // pictureBox1
             // 
             this.pictureBox1.Image = global::CSharp_CaroGame.Properties.Resources.Caro;
-            this.pictureBox1.Location = new System.Drawing.Point(23, 54);
+            this.pictureBox1.Location = new System.Drawing.Point(23, 44);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(340, 332);
+            this.pictureBox1.Size = new System.Drawing.Size(340, 342);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
@@ -199,7 +207,7 @@ namespace CSharp_CaroGame
             this.button_connect.Name = "button_connect";
             this.button_connect.Size = new System.Drawing.Size(198, 49);
             this.button_connect.TabIndex = 6;
-            this.button_connect.Text = "Kết nối và bắt đầu";
+            this.button_connect.Text = "Conncet";
             this.button_connect.UseVisualStyleBackColor = true;
             // 
             // textBox_port
@@ -218,18 +226,20 @@ namespace CSharp_CaroGame
             this.label_port.TabIndex = 8;
             this.label_port.Text = "Port :";
             // 
-            // chơiTrongLANIPToolStripMenuItem
+            // panel_banco
             // 
-            this.chơiTrongLANIPToolStripMenuItem.Name = "chơiTrongLANIPToolStripMenuItem";
-            this.chơiTrongLANIPToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.chơiTrongLANIPToolStripMenuItem.Text = "Chơi trong LAN IP";
-            this.chơiTrongLANIPToolStripMenuItem.Click += new System.EventHandler(this.chơiTrongLANIPToolStripMenuItem_Click);
+            this.panel_banco.BackColor = System.Drawing.Color.DarkSeaGreen;
+            this.panel_banco.Location = new System.Drawing.Point(369, 44);
+            this.panel_banco.Name = "panel_banco";
+            this.panel_banco.Size = new System.Drawing.Size(675, 621);
+            this.panel_banco.TabIndex = 9;
             // 
-            // Form1
+            // Form_CoCaRo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1236, 716);
+            this.ClientSize = new System.Drawing.Size(1056, 677);
+            this.Controls.Add(this.panel_banco);
             this.Controls.Add(this.label_port);
             this.Controls.Add(this.textBox_port);
             this.Controls.Add(this.button_connect);
@@ -240,9 +250,10 @@ namespace CSharp_CaroGame
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
+            this.Name = "Form_CoCaRo";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.Form_CoCaRo_Load);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Draw_Panel_Paint);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -274,6 +285,7 @@ namespace CSharp_CaroGame
         private System.Windows.Forms.TextBox textBox_port;
         private System.Windows.Forms.Label label_port;
         private System.Windows.Forms.ToolStripMenuItem chơiTrongLANIPToolStripMenuItem;
+        private System.Windows.Forms.Panel panel_banco;
     }
 }
 
