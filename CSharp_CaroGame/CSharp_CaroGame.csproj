@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MySql.Data, Version=8.0.25.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\MySQL\MySQL Connector Net 8.0.25\Assemblies\v4.5.2\MySql.Data.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -48,17 +52,27 @@
   <ItemGroup>
     <Compile Include="Ban_Co.cs" />
     <Compile Include="Caro_Control.cs" />
-    <Compile Include="O_Co.cs" />
     <Compile Include="Form_CoCaRo.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form_CoCaRo.Designer.cs">
       <DependentUpon>Form_CoCaRo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Login_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login_Form.Designer.cs">
+      <DependentUpon>Login_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MySQL_Connection.cs" />
+    <Compile Include="O_Co.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form_CoCaRo.resx">
       <DependentUpon>Form_CoCaRo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login_Form.resx">
+      <DependentUpon>Login_Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -86,6 +100,7 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Resources\caro.jpg" />
+    <None Include="Resources\Caro_login.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

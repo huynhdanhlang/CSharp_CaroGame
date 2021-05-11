@@ -14,6 +14,7 @@ namespace CSharp_CaroGame
     {
         private Caro_Control Control;
         private Graphics grap;
+        String username;
         public Form_CoCaRo()
         {
             InitializeComponent();
@@ -22,6 +23,14 @@ namespace CSharp_CaroGame
             textBox_host.Text = "127.0.0.1";
             textBox_port.Text = "8080";
 
+
+        }
+        public void initForm(String username)
+        {
+            this.username = username;
+            textBox_username.Text = username;
+            this.Text = "Login as " + username;
+            textBox_username.Enabled = false;
         }
 
         private void thoátToolStripMenuItem_Click(object sender, EventArgs e)
@@ -59,5 +68,6 @@ namespace CSharp_CaroGame
         {
             Control.VeBanCo(grap);
         }
+
     }
 }
