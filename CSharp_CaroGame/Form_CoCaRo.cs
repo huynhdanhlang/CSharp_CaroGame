@@ -20,8 +20,6 @@ namespace CSharp_CaroGame
             InitializeComponent();
             Control = new Caro_Control();
             grap = panel_banco.CreateGraphics();
-            textBox_host.Text = "127.0.0.1";
-            textBox_port.Text = "8080";
 
 
         }
@@ -33,31 +31,7 @@ namespace CSharp_CaroGame
             textBox_username.Enabled = false;
         }
 
-        private void thoátToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void chơiTrongLANIPToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            textBox_host.Enabled = true;
-            textBox_port.Enabled = true;
-            button_connect.Enabled = true;
-        }
-
-        private void đánhVơiNgườiToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            textBox_host.Enabled = false;
-            textBox_port.Enabled = false;
-            button_connect.Enabled = false;
-        }
-
-        private void đánhVớiMáyToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            textBox_host.Enabled = false;
-            textBox_port.Enabled = false;
-            button_connect.Enabled = false;
-        }
+        
 
         private void Form_CoCaRo_Load(object sender, EventArgs e)
         {
@@ -69,5 +43,10 @@ namespace CSharp_CaroGame
             Control.VeBanCo(grap);
         }
 
+        private void btn_LAN_Click(object sender, EventArgs e)
+        {
+            Form_KetNoi frm_ketnoi = new Form_KetNoi();
+            frm_ketnoi.Show();
+        }
     }
 }

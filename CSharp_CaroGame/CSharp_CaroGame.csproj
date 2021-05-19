@@ -58,6 +58,12 @@
     <Compile Include="Form_CoCaRo.Designer.cs">
       <DependentUpon>Form_CoCaRo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form_KetNoi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_KetNoi.Designer.cs">
+      <DependentUpon>Form_KetNoi.cs</DependentUpon>
+    </Compile>
     <Compile Include="Login_Form.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -70,6 +76,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form_CoCaRo.resx">
       <DependentUpon>Form_CoCaRo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_KetNoi.resx">
+      <DependentUpon>Form_KetNoi.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login_Form.resx">
       <DependentUpon>Login_Form.cs</DependentUpon>

@@ -31,10 +31,10 @@ namespace CSharp_CaroGame
         {
             this.textBox_usernmae = new System.Windows.Forms.TextBox();
             this.label_username = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox_password = new System.Windows.Forms.TextBox();
             this.button_login = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -54,16 +54,6 @@ namespace CSharp_CaroGame
             this.label_username.TabIndex = 1;
             this.label_username.Text = "Username :";
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::CSharp_CaroGame.Properties.Resources.Caro_login;
-            this.pictureBox1.Location = new System.Drawing.Point(446, 29);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(333, 329);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 2;
-            this.pictureBox1.TabStop = false;
-            // 
             // label1
             // 
             this.label1.Location = new System.Drawing.Point(30, 160);
@@ -79,6 +69,7 @@ namespace CSharp_CaroGame
             this.textBox_password.Name = "textBox_password";
             this.textBox_password.Size = new System.Drawing.Size(276, 32);
             this.textBox_password.TabIndex = 4;
+            this.textBox_password.UseSystemPasswordChar = true;
             // 
             // button_login
             // 
@@ -89,6 +80,16 @@ namespace CSharp_CaroGame
             this.button_login.Text = "Login";
             this.button_login.UseVisualStyleBackColor = true;
             this.button_login.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::CSharp_CaroGame.Properties.Resources.Caro_login;
+            this.pictureBox1.Location = new System.Drawing.Point(446, 29);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(333, 329);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 2;
+            this.pictureBox1.TabStop = false;
             // 
             // Login_Form
             // 
