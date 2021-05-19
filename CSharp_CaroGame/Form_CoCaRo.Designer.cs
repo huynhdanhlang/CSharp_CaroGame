@@ -72,6 +72,8 @@ namespace CSharp_CaroGame
             this.panel_banco.Name = "panel_banco";
             this.panel_banco.Size = new System.Drawing.Size(668, 617);
             this.panel_banco.TabIndex = 9;
+            this.panel_banco.Paint += new System.Windows.Forms.PaintEventHandler(this.Draw_Panel_Paint);
+            this.panel_banco.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel_banco_MouseClick);
             // 
             // pictureBox1
             // 
@@ -86,7 +88,7 @@ namespace CSharp_CaroGame
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(21, 330);
+            this.label1.Location = new System.Drawing.Point(21, 338);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(105, 17);
             this.label1.TabIndex = 10;
@@ -109,6 +111,7 @@ namespace CSharp_CaroGame
             this.btn_Frient.TabIndex = 12;
             this.btn_Frient.Text = "Play with frient";
             this.btn_Frient.UseVisualStyleBackColor = true;
+            this.btn_Frient.Click += new System.EventHandler(this.btn_Frient_Click);
             // 
             // btn_LAN
             // 
@@ -141,7 +144,7 @@ namespace CSharp_CaroGame
             // 
             // pgb_Time
             // 
-            this.pgb_Time.Location = new System.Drawing.Point(24, 362);
+            this.pgb_Time.Location = new System.Drawing.Point(24, 361);
             this.pgb_Time.Name = "pgb_Time";
             this.pgb_Time.Size = new System.Drawing.Size(308, 23);
             this.pgb_Time.TabIndex = 16;
@@ -151,15 +154,16 @@ namespace CSharp_CaroGame
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Location = new System.Drawing.Point(24, 420);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(308, 137);
+            this.groupBox1.Size = new System.Drawing.Size(308, 128);
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
+            this.groupBox1.Text = "Rule";
             // 
             // textBox1
             // 
+            this.textBox1.Enabled = false;
             this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.textBox1.Location = new System.Drawing.Point(6, 32);
+            this.textBox1.Location = new System.Drawing.Point(6, 21);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(296, 99);
@@ -169,7 +173,7 @@ namespace CSharp_CaroGame
             // 
             // btn_Undo
             // 
-            this.btn_Undo.Location = new System.Drawing.Point(176, 319);
+            this.btn_Undo.Location = new System.Drawing.Point(176, 327);
             this.btn_Undo.Name = "btn_Undo";
             this.btn_Undo.Size = new System.Drawing.Size(75, 28);
             this.btn_Undo.TabIndex = 18;
@@ -178,7 +182,7 @@ namespace CSharp_CaroGame
             // 
             // btn_Redo
             // 
-            this.btn_Redo.Location = new System.Drawing.Point(257, 319);
+            this.btn_Redo.Location = new System.Drawing.Point(257, 327);
             this.btn_Redo.Name = "btn_Redo";
             this.btn_Redo.Size = new System.Drawing.Size(75, 28);
             this.btn_Redo.TabIndex = 19;

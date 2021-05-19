@@ -19,9 +19,9 @@ namespace CSharp_CaroGame
         {
             InitializeComponent();
             Control = new Caro_Control();
+            Control.KhoiTaoMangOCo();
+
             grap = panel_banco.CreateGraphics();
-
-
         }
         public void initForm(String username)
         {
@@ -41,12 +41,26 @@ namespace CSharp_CaroGame
         private void Draw_Panel_Paint(object sender, PaintEventArgs e)
         {
             Control.VeBanCo(grap);
+            Control.VeLaiQuanCo(grap);
         }
 
         private void btn_LAN_Click(object sender, EventArgs e)
         {
             Form_KetNoi frm_ketnoi = new Form_KetNoi();
             frm_ketnoi.Show();
+        }
+
+        private void panel_banco_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (!Control.SanSang)
+                return;
+            Control.DanhCo(e.X, e.Y, grap);
+        }
+
+        private void btn_Frient_Click(object sender, EventArgs e)
+        {
+            grap.Clear(panel_banco.BackColor);
+            Control.StartPvP(grap);
         }
     }
 }

@@ -23,5 +23,12 @@ namespace CSharp_CaroGame
         public Point ViTri { get => _ViTri; set => _ViTri = value; }
         public int SoHuu { get => _SoHuu; set => _SoHuu = value; }
 
+        public O_Co(int dong, int cot, Point vitri, int sohuu)
+        {
+            _Dong = dong;
+            _Cot = cot;
+            _ViTri = vitri;
+            _SoHuu = sohuu;
+        }
     }
 }

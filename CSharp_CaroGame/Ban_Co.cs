@@ -12,6 +12,8 @@ namespace CSharp_CaroGame
         private int _SoDong;
         private int _SoCot;
 
+        public int SoDong { get => _SoDong; }
+        public int SoCot { get => _SoCot; }
         public Ban_Co()
         {
             _SoDong = 0;
@@ -35,9 +37,14 @@ namespace CSharp_CaroGame
             //vẽ dòng mỗi dòng cách nhau 25 đơn vị
             for (int j = 0; j <= _SoDong; j++)
             {
-                g.DrawLine(Caro_Control.pen, 0, j * O_Co._ChieuCao, _SoCot * O_Co._ChieuCao, j * O_Co._ChieuCao);
+                g.DrawLine(Caro_Control.pen, 0, j * O_Co._ChieuCao, _SoCot * O_Co._ChieuRong, j * O_Co._ChieuCao);
 
             }
+        }
+
+        public void VeQuanCo (Graphics g, Point point, SolidBrush sb)
+        {
+            g.FillEllipse(sb, point.X + 1, point.Y + 1, O_Co._ChieuRong - 2, O_Co._ChieuCao - 2);
         }
     }
 }
