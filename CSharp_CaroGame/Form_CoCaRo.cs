@@ -57,6 +57,13 @@ namespace CSharp_CaroGame
             if (!Control.SanSang)
                 return;
             Control.DanhCo(e.X, e.Y, grap);
+
+            if (Control.KiemTraChienThang())
+            {
+                Control.ThongBaoKetThuc();
+                Replay();
+            }
+                
         }
 
         private void btn_Frient_Click(object sender, EventArgs e)
@@ -69,19 +76,7 @@ namespace CSharp_CaroGame
 
         private void btn_Replay_Click(object sender, EventArgs e)
         {
-            Control.Reset(grap);
-            grap.Clear(panel_banco.BackColor);
-            //Control.StartPvP(grap);
-
-            btn_Frient.Enabled = true;
-            btn_Computer.Enabled = true;
-            btn_LAN.Enabled = true;
-            btn_Replay.Enabled = false;
-
-            btn_Undo.Visible = false;
-            btn_Redo.Visible = false;
-            label1.Visible = false;
-            pgb_Time.Visible = false;
+            Replay();
         }
 
         private void btn_Undo_Click(object sender, EventArgs e)
@@ -111,5 +106,22 @@ namespace CSharp_CaroGame
             label1.Visible = true;
             pgb_Time.Visible = true;
         }
+
+        public void Replay()
+        {
+            Control.Reset(grap);
+            grap.Clear(panel_banco.BackColor);
+            //Control.StartPvP(grap);
+
+            btn_Frient.Enabled = true;
+            btn_Computer.Enabled = true;
+            btn_LAN.Enabled = true;
+            btn_Replay.Enabled = false;
+
+            btn_Undo.Visible = false;
+            btn_Redo.Visible = false;
+            label1.Visible = false;
+            pgb_Time.Visible = false;
+        } 
     }
 }

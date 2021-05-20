@@ -8,6 +8,13 @@ using System.Windows.Forms;
 
 namespace CSharp_CaroGame
 {
+    public enum KETTHUC
+    {
+        Draw,
+        P1,
+        P2,
+        Com
+    }
     class Caro_Control
     {
         public static Pen pen;
@@ -21,6 +28,7 @@ namespace CSharp_CaroGame
         public bool _SanSang;
         private Stack<O_Co> stk_CacNuocDaDi;
         private Stack<O_Co> stk_CacNuocDaUndo;
+        private KETTHUC KetThuc; 
 
         public bool SanSang { get => _SanSang; }
 
@@ -137,5 +145,147 @@ namespace CSharp_CaroGame
                 LuotDi = (LuotDi == 1) ? 2 : 1;
             }
         }
+
+        #region Xử lý thắng thua
+        public void ThongBaoKetThuc()
+        {
+            switch (KetThuc)
+            {
+                case KETTHUC.Draw:
+                    MessageBox.Show("Draw. Endgame!");
+                    break;
+                case KETTHUC.P1:
+                    MessageBox.Show("Black player wins :)");
+                    break;
+                case KETTHUC.P2:
+                    MessageBox.Show("White player wins :)");
+                    break;
+                case KETTHUC.Com:
+                    MessageBox.Show("Game Over");
+                    break;
+            }
+            _SanSang = false;
+        }
+
+        public bool KiemTraChienThang()
+        {
+            if(stk_CacNuocDaDi.Count == _BanCo.SoDong * _BanCo.SoCot)
+            {
+                KetThuc = KETTHUC.Draw;
+                return true;
+            }
+
+            foreach (O_Co oco in stk_CacNuocDaDi)
+            {
+                if(DuyetDoc(oco.Dong, oco.Cot, oco.SoHuu) || DuyetNgang(oco.Dong, oco.Cot, oco.SoHuu) ||
+                    DuyetCheoXuoi(oco.Dong, oco.Cot, oco.SoHuu) || DuyetCheoNguoc(oco.Dong, oco.Cot, oco.SoHuu))
+                {
+                    KetThuc = oco.SoHuu == 1 ? KETTHUC.P1 : KETTHUC.P2;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private bool DuyetDoc(int crDong, int crCot, int crSoHuu)
+        {
+            //Quân đang xét nằm từ dòng 16 trở lên
+            if (crDong > _BanCo.SoDong - 5)
+                return false;
+
+            //Xét coi có đủ 5 quân thẳng cột không
+            //Qua được ải này là xác định đủ 5 quân rồi đó
+            int dem;
+            for (dem = 1; dem < 5; dem++)
+                if (_MangOCo[crDong + dem, crCot].SoHuu != crSoHuu)
+                    return false;
+
+            //Xét coi 5 quân đó có sát biên trên hay biên dưới không
+            //Nếu sát biên thì không thể bị chặn 2 đầu được => Thắng
+            if (crDong == 0 || crDong + dem == _BanCo.SoDong)
+                return true;
+
+            //Này là trường hợp 5 quân nằm giữa bàn cờ, xét coi có bị chặn 2 đầu không
+            if (_MangOCo[crDong - 1, crCot].SoHuu == 0 || _MangOCo[crDong + dem, crCot].SoHuu == 0)
+                return true;
+
+            return false;
+        }
+
+        private bool DuyetNgang(int crDong, int crCot, int crSoHuu)
+        {
+            //Quân đang xét có nằm từ cột 16 trở lên không
+            if (crCot > _BanCo.SoCot - 5)
+                return false;
+
+            //Xét coi có đủ 5 quân thẳng dòng không
+            //Qua được ải này là xác định đủ 5 quân rồi đó
+            int dem;
+            for (dem = 1; dem < 5; dem++)
+                if (_MangOCo[crDong, crCot + dem].SoHuu != crSoHuu)
+                    return false;
+
+            //Xét coi 5 quân đó có sát biên trái hay biên phải không
+            //Nếu sát biên thì không thể bị chặn 2 đầu được => Thắng
+            if (crCot == 0 || crCot + dem == _BanCo.SoCot)
+                return true;
+
+            //Này là trường hợp 5 quân nằm giữa bàn cờ, xét coi có bị chặn 2 đầu không
+            if (_MangOCo[crDong, crCot - 1].SoHuu == 0 || _MangOCo[crDong, crCot + dem].SoHuu == 0)
+                return true;
+
+            return false;
+        }
+
+        private bool DuyetCheoXuoi(int crDong, int crCot, int crSoHuu)
+        {
+            //Quân đang xét có nằm từ cột, dòng 16 trở lên không
+            if (crDong > _BanCo.SoDong - 5 || crCot > _BanCo.SoCot - 5)
+                return false;
+
+            //Xét coi có đủ 5 quân thẳng chéo xuôi không
+            //Qua được ải này là xác định đủ 5 quân rồi đó
+            int dem;
+            for (dem = 1; dem < 5; dem++)
+                if (_MangOCo[crDong + dem, crCot + dem].SoHuu != crSoHuu)
+                    return false;
+
+            //Xét coi 5 quân đó có sát biên trái trên hay biên phải dưới không
+            //Nếu sát thì không thể bị chặn 2 đầu được => Thắng
+            if (crDong == 0 || crCot == 0 || crDong + dem == _BanCo.SoDong || crCot + dem == _BanCo.SoCot)
+                return true;
+
+            //Này là trường hợp 5 quân nằm giữa bàn cờ, xét coi có bị chặn 2 đầu không
+            if (_MangOCo[crDong - 1, crCot - 1].SoHuu == 0 || _MangOCo[crDong + dem, crCot + dem].SoHuu == 0)
+                return true;
+
+            return false;
+        }
+
+        private bool DuyetCheoNguoc(int crDong, int crCot, int crSoHuu)
+        {
+            //Quân đang xét có nằm từ cột 16 trở lên không
+            if (crDong < 4 || crCot > _BanCo.SoCot - 5)
+                return false;
+
+            //Xét coi có đủ 5 quân thẳng dòng không
+            //Qua được ải này là xác định đủ 5 quân rồi đó
+            int dem;
+            for (dem = 1; dem < 5; dem++)
+                if (_MangOCo[crDong - dem, crCot + dem].SoHuu != crSoHuu)
+                    return false;
+
+            //Xét coi 5 quân đó có sát biên trái hay biên phải không
+            //Nếu sát biên thì không thể bị chặn 2 đầu được => Thắng
+            if (crDong == _BanCo.SoDong -1 || crCot == 0 || crDong == 4 || crCot + dem == _BanCo.SoCot)
+                return true;
+
+            //Này là trường hợp 5 quân nằm giữa bàn cờ, xét coi có bị chặn 2 đầu không
+            if (_MangOCo[crDong + 1, crCot - 1].SoHuu == 0 || _MangOCo[crDong - dem, crCot + dem].SoHuu == 0)
+                return true;
+
+            return false;
+        }
+        #endregion
     }
 }
