@@ -93,6 +93,7 @@ namespace CSharp_CaroGame
             this.label1.Size = new System.Drawing.Size(105, 17);
             this.label1.TabIndex = 10;
             this.label1.Text = "Time remaining";
+            this.label1.Visible = false;
             // 
             // btn_Computer
             // 
@@ -102,6 +103,7 @@ namespace CSharp_CaroGame
             this.btn_Computer.TabIndex = 11;
             this.btn_Computer.Text = "Play with computer";
             this.btn_Computer.UseVisualStyleBackColor = true;
+            this.btn_Computer.Click += new System.EventHandler(this.btn_Computer_Click);
             // 
             // btn_Frient
             // 
@@ -125,6 +127,7 @@ namespace CSharp_CaroGame
             // 
             // btn_Replay
             // 
+            this.btn_Replay.Enabled = false;
             this.btn_Replay.ForeColor = System.Drawing.Color.MediumBlue;
             this.btn_Replay.Location = new System.Drawing.Point(257, 613);
             this.btn_Replay.Name = "btn_Replay";
@@ -132,6 +135,7 @@ namespace CSharp_CaroGame
             this.btn_Replay.TabIndex = 14;
             this.btn_Replay.Text = "Replay";
             this.btn_Replay.UseVisualStyleBackColor = true;
+            this.btn_Replay.Click += new System.EventHandler(this.btn_Replay_Click);
             // 
             // btn_History
             // 
@@ -148,6 +152,7 @@ namespace CSharp_CaroGame
             this.pgb_Time.Name = "pgb_Time";
             this.pgb_Time.Size = new System.Drawing.Size(308, 23);
             this.pgb_Time.TabIndex = 16;
+            this.pgb_Time.Visible = false;
             // 
             // groupBox1
             // 
@@ -179,6 +184,8 @@ namespace CSharp_CaroGame
             this.btn_Undo.TabIndex = 18;
             this.btn_Undo.Text = "Undo";
             this.btn_Undo.UseVisualStyleBackColor = true;
+            this.btn_Undo.Visible = false;
+            this.btn_Undo.Click += new System.EventHandler(this.btn_Undo_Click);
             // 
             // btn_Redo
             // 
@@ -188,6 +195,8 @@ namespace CSharp_CaroGame
             this.btn_Redo.TabIndex = 19;
             this.btn_Redo.Text = "Redo";
             this.btn_Redo.UseVisualStyleBackColor = true;
+            this.btn_Redo.Visible = false;
+            this.btn_Redo.Click += new System.EventHandler(this.btn_Redo_Click);
             // 
             // Form_CoCaRo
             // 

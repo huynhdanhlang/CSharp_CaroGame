@@ -46,5 +46,10 @@ namespace CSharp_CaroGame
         {
             g.FillEllipse(sb, point.X + 1, point.Y + 1, O_Co._ChieuRong - 2, O_Co._ChieuCao - 2);
         }
+
+        public void XoaQuanCo(Graphics g, Point point, SolidBrush sb)
+        {
+            g.FillRectangle(sb, point.X + 1, point.Y + 1, O_Co._ChieuRong - 2, O_Co._ChieuCao - 2);
+        }
     }
 }

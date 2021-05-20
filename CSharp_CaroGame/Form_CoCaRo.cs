@@ -48,6 +48,8 @@ namespace CSharp_CaroGame
         {
             Form_KetNoi frm_ketnoi = new Form_KetNoi();
             frm_ketnoi.Show();
+            //if() Nhan Connect thi moi lam tiep
+            SetButton();
         }
 
         private void panel_banco_MouseClick(object sender, MouseEventArgs e)
@@ -59,8 +61,55 @@ namespace CSharp_CaroGame
 
         private void btn_Frient_Click(object sender, EventArgs e)
         {
-            grap.Clear(panel_banco.BackColor);
+            //grap.Clear(panel_banco.BackColor);
             Control.StartPvP(grap);
+
+            SetButton();
+        }
+
+        private void btn_Replay_Click(object sender, EventArgs e)
+        {
+            Control.Reset(grap);
+            grap.Clear(panel_banco.BackColor);
+            //Control.StartPvP(grap);
+
+            btn_Frient.Enabled = true;
+            btn_Computer.Enabled = true;
+            btn_LAN.Enabled = true;
+            btn_Replay.Enabled = false;
+
+            btn_Undo.Visible = false;
+            btn_Redo.Visible = false;
+            label1.Visible = false;
+            pgb_Time.Visible = false;
+        }
+
+        private void btn_Undo_Click(object sender, EventArgs e)
+        {
+            Control.Undo(grap);
+        }
+
+        private void btn_Redo_Click(object sender, EventArgs e)
+        {
+            Control.Redo(grap);
+        }
+
+        private void btn_Computer_Click(object sender, EventArgs e)
+        {
+            SetButton();
+        }
+
+        public void SetButton()
+        {
+            btn_Frient.Enabled = false;
+            btn_Computer.Enabled = false;
+            btn_LAN.Enabled = false;
+            btn_Replay.Enabled = true;
+
+            btn_Undo.Visible = true;
+            btn_Redo.Visible = true;
+            label1.Visible = true;
+            pgb_Time.Visible = true;
         }
     }
 }

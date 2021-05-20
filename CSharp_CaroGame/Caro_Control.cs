@@ -13,12 +13,14 @@ namespace CSharp_CaroGame
         public static Pen pen;
         public static SolidBrush sbWhite;
         public static SolidBrush sbBlack;
+        public static SolidBrush sbGreen;
 
         private O_Co[,] _MangOCo;
         private Ban_Co _BanCo;
         private int LuotDi;
         public bool _SanSang;
-        private List<O_Co> list_CacNuocDaDi;
+        private Stack<O_Co> stk_CacNuocDaDi;
+        private Stack<O_Co> stk_CacNuocDaUndo;
 
         public bool SanSang { get => _SanSang; }
 
@@ -28,9 +30,11 @@ namespace CSharp_CaroGame
             pen = new Pen(Color.Red);
             sbWhite= new SolidBrush(Color.White);
             sbBlack= new SolidBrush(Color.Black);
+            sbGreen = new SolidBrush(Color.DarkSeaGreen);
             _BanCo = new Ban_Co(20, 20);
             _MangOCo = new O_Co[_BanCo.SoDong, _BanCo.SoCot];
-            list_CacNuocDaDi = new List<O_Co>();
+            stk_CacNuocDaDi = new Stack<O_Co>();
+            stk_CacNuocDaUndo = new Stack<O_Co>();
             LuotDi = 1;
         }
 
@@ -73,14 +77,15 @@ namespace CSharp_CaroGame
                     MessageBox.Show("Error :(");
                     break;
             }
-            
-            list_CacNuocDaDi.Add(_MangOCo[Dong, Cot]);
+            stk_CacNuocDaUndo = new Stack<O_Co>();
+            O_Co oco = new O_Co(_MangOCo[Dong, Cot].Dong, _MangOCo[Dong, Cot].Cot, _MangOCo[Dong, Cot].ViTri, _MangOCo[Dong, Cot].SoHuu);
+            stk_CacNuocDaDi.Push(oco);
             return true;
         }
 
         public void VeLaiQuanCo(Graphics g)
         {
-            foreach(O_Co oco in list_CacNuocDaDi)
+            foreach(O_Co oco in stk_CacNuocDaDi)
             {
                 if (oco.SoHuu== 1)
                     _BanCo.VeQuanCo(g, oco.ViTri, sbBlack);
@@ -92,9 +97,45 @@ namespace CSharp_CaroGame
         public void StartPvP(Graphics g)
         {
             _SanSang = true;
-            list_CacNuocDaDi = new List<O_Co>();
+            /*stk_CacNuocDaDi = new List<O_Co>();
+            KhoiTaoMangOCo();
+            VeBanCo(g);*/
+        }
+
+        public void Reset(Graphics g)
+        {
+            _SanSang = false;
+            stk_CacNuocDaDi = new Stack<O_Co>();
+            stk_CacNuocDaUndo = new Stack<O_Co>();
+            LuotDi = 1;
             KhoiTaoMangOCo();
             VeBanCo(g);
+        }
+
+        public void Undo(Graphics g)
+        {
+            if(stk_CacNuocDaDi.Count != 0)
+            {
+                O_Co oco = stk_CacNuocDaDi.Pop();
+
+                stk_CacNuocDaUndo.Push(new O_Co(oco.Dong, oco.Cot, oco.ViTri, oco.SoHuu));
+                _MangOCo[oco.Dong, oco.Cot].SoHuu = 0;
+                _BanCo.XoaQuanCo(g, oco.ViTri, sbGreen);
+                LuotDi= (LuotDi == 1) ? 2 : 1;
+            }
+        }
+
+        public void Redo(Graphics g)
+        {
+            if (stk_CacNuocDaUndo.Count != 0)
+            {
+                O_Co oco = stk_CacNuocDaUndo.Pop();
+
+                stk_CacNuocDaDi.Push(new O_Co(oco.Dong, oco.Cot, oco.ViTri, oco.SoHuu));
+                _MangOCo[oco.Dong, oco.Cot].SoHuu = oco.SoHuu;
+                _BanCo.VeQuanCo(g, oco.ViTri, oco.SoHuu == 1 ? sbBlack:sbWhite);
+                LuotDi = (LuotDi == 1) ? 2 : 1;
+            }
         }
     }
 }
