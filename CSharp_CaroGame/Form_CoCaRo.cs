@@ -43,7 +43,7 @@ namespace CSharp_CaroGame
             Control.VeBanCo(grap);
             Control.VeLaiQuanCo(grap);
         }
-
+        #region Mấy sự kiện Click
         private void btn_LAN_Click(object sender, EventArgs e)
         {
             Form_KetNoi frm_ketnoi = new Form_KetNoi();
@@ -56,13 +56,29 @@ namespace CSharp_CaroGame
         {
             if (!Control.SanSang)
                 return;
-            Control.DanhCo(e.X, e.Y, grap);
 
-            if (Control.KiemTraChienThang())
+            if (Control.DanhCo(e.X, e.Y, grap))
             {
-                Control.ThongBaoKetThuc();
-                Replay();
+                if (Control.KiemTraChienThang())
+                {
+                    Control.ThongBaoKetThuc();
+                    Replay();
+                }
+                else
+                {
+                    if (Control.CheDoChoi == 2)
+                    {
+                        Control.MayDanh(grap);
+                        if (Control.KiemTraChienThang())
+                        {
+                            Control.ThongBaoKetThuc();
+                            Replay();
+                        }
+                    }
+                }
             }
+
+            
                 
         }
 
@@ -78,7 +94,15 @@ namespace CSharp_CaroGame
         {
             Replay();
         }
+        
+        private void btn_Computer_Click(object sender, EventArgs e)
+        {
+            Control.StartPvC(grap);
+            SetButton();
+        }
+        #endregion
 
+        #region Undo, Redo
         private void btn_Undo_Click(object sender, EventArgs e)
         {
             Control.Undo(grap);
@@ -88,11 +112,7 @@ namespace CSharp_CaroGame
         {
             Control.Redo(grap);
         }
-
-        private void btn_Computer_Click(object sender, EventArgs e)
-        {
-            SetButton();
-        }
+        #endregion
 
         public void SetButton()
         {

@@ -44,7 +44,7 @@ namespace CSharp_CaroGame
 
         public void VeQuanCo (Graphics g, Point point, SolidBrush sb)
         {
-            g.FillEllipse(sb, point.X + 1, point.Y + 1, O_Co._ChieuRong - 2, O_Co._ChieuCao - 2);
+            g.FillEllipse(sb, point.X + 2, point.Y + 2, O_Co._ChieuRong - 4, O_Co._ChieuCao - 4);
         }
 
         public void XoaQuanCo(Graphics g, Point point, SolidBrush sb)
