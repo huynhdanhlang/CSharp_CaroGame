@@ -224,9 +224,12 @@ namespace CSharp_CaroGame
                         win = reader.GetInt32(0) + 1;
                         MySqlConnection con = MySQL_Connection.Connection;
                         String str = "Update user set num_win=" + win + " where username = '" + this.username + "'";
+                        String up = "Update user set history=CONCAT('" + "\n" + lb.Text + " " + DateTime.Now.ToString() + "',history) where username = '" + this.username + "'";
+
                         cmd = new MySqlCommand(str, con);
                         reader.Close();
-
+                        cmd.ExecuteNonQuery();
+                        cmd = new MySqlCommand(up, conn);
                         cmd.ExecuteNonQuery();
                         conn.Close();
                     }
