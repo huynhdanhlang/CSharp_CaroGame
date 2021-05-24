@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -29,9 +30,10 @@ namespace CSharp_CaroGame
             textBox_username.Text = username;
             this.Text = "Login as " + username;
             textBox_username.Enabled = false;
+            Control.getUsername(username);
         }
 
-        
+
 
         private void Form_CoCaRo_Load(object sender, EventArgs e)
         {
@@ -78,8 +80,8 @@ namespace CSharp_CaroGame
                 }
             }
 
-            
-                
+
+
         }
 
         private void btn_Frient_Click(object sender, EventArgs e)
@@ -94,7 +96,7 @@ namespace CSharp_CaroGame
         {
             Replay();
         }
-        
+
         private void btn_Computer_Click(object sender, EventArgs e)
         {
             Control.StartPvC(grap);
@@ -142,6 +144,68 @@ namespace CSharp_CaroGame
             btn_Redo.Visible = false;
             label1.Visible = false;
             pgb_Time.Visible = false;
-        } 
+        }
+
+        private void btn_History_Click(object sender, EventArgs e)
+        {
+            //Hiển thị lịch sử chơi của người chơi
+            History hs = new History();
+            hs.Visible = true;
+            hs.Show();
+            MySqlConnection conn = MySQL_Connection.Connection;
+            MySqlDataReader reader;
+            String query = "Select num_win,num_lose,history from user where username = '" + this.username + "'";
+            MySqlCommand cmd = new MySqlCommand(query, conn);
+            reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+
+                String x = reader.GetString(2);
+                int y = reader.GetInt32(0);
+                int z = reader.GetInt32(1);
+                hs.textBox_win.Text = y.ToString();
+                hs.textBox_lose.Text = z.ToString();
+                hs.textBox_lose.Enabled = false;
+                hs.textBox_win.Enabled = false;
+                string[] lines = x.Split(
+                new[] { "\r\n", "\r", "\n" },
+                StringSplitOptions.None
+            );
+                Label[] lb = new Label[25];
+                for (int i = 1; i < lines.Length; i++)
+                {
+                    String ss = lines[i].ToString();
+
+                    if (ss.Contains("thua"))
+                    {
+                        lb[i] = new Label();
+                        lb[i].BackColor = Color.Red;
+                        lb[i].Height = 23;
+                        lb[i].Width = 530;
+                        lb[i].Text = lines[i];
+                        lb[i].Location = new Point(30, 25 + (i * 30));
+                        hs.panel_history.Controls.Add(lb[i]);
+                        reader.Close();
+
+                    }
+                    if (ss.Contains("thắng"))
+                    {
+                        lb[i] = new Label();
+                        lb[i].BackColor = Color.Green;
+                        lb[i].Height = 23;
+                        lb[i].Width = 530;
+                        lb[i].Text = lines[i];
+                        lb[i].Location = new Point(30, 25 + (i * 30));
+                        hs.panel_history.Controls.Add(lb[i]);
+                        reader.Close();
+
+                    }
+
+                }
+
+                conn.Close();
+            }
+
+        }
     }
 }

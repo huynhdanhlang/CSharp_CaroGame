@@ -145,6 +145,7 @@ namespace CSharp_CaroGame
             this.btn_History.TabIndex = 15;
             this.btn_History.Text = "History";
             this.btn_History.UseVisualStyleBackColor = true;
+            this.btn_History.Click += new System.EventHandler(this.btn_History_Click);
             // 
             // pgb_Time
             // 
