@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -18,6 +19,11 @@ namespace CSharp_CaroGame
     }
     class Caro_Control
     {
+        History hs = new History();
+        MySqlDataReader reader;
+        MySqlCommand cmd;
+        public String username;
+        public int win, lose;
         public static Pen pen;
         public static SolidBrush sbWhite;
         public static SolidBrush sbBlack;
@@ -39,8 +45,8 @@ namespace CSharp_CaroGame
         {
             //Tao cay but mau do
             pen = new Pen(Color.Red);
-            sbWhite= new SolidBrush(Color.White);
-            sbBlack= new SolidBrush(Color.Black);
+            sbWhite = new SolidBrush(Color.White);
+            sbBlack = new SolidBrush(Color.Black);
             sbGreen = new SolidBrush(Color.DarkSeaGreen);
             _BanCo = new Ban_Co(20, 20);
             _MangOCo = new O_Co[_BanCo.SoDong, _BanCo.SoCot];
@@ -48,7 +54,10 @@ namespace CSharp_CaroGame
             stk_CacNuocDaUndo = new Stack<O_Co>();
             LuotDi = 1;
         }
-
+        public void getUsername(String username)
+        {
+            this.username = username;
+        }
         public void VeBanCo(Graphics g)
         {
             _BanCo.VeBanCo(g);
@@ -56,10 +65,10 @@ namespace CSharp_CaroGame
 
         public void KhoiTaoMangOCo()
         {
-            for (int i=0; i< _BanCo.SoDong; i++)
-                for (int j=0; j< _BanCo.SoCot; j++)
+            for (int i = 0; i < _BanCo.SoDong; i++)
+                for (int j = 0; j < _BanCo.SoCot; j++)
                 {
-                    _MangOCo[i, j] = new O_Co(i, j, new Point(j*O_Co._ChieuRong, i*O_Co._ChieuCao), 0);
+                    _MangOCo[i, j] = new O_Co(i, j, new Point(j * O_Co._ChieuRong, i * O_Co._ChieuCao), 0);
                 }
         }
 
@@ -96,9 +105,9 @@ namespace CSharp_CaroGame
 
         public void VeLaiQuanCo(Graphics g)
         {
-            foreach(O_Co oco in stk_CacNuocDaDi)
+            foreach (O_Co oco in stk_CacNuocDaDi)
             {
-                if (oco.SoHuu== 1)
+                if (oco.SoHuu == 1)
                     _BanCo.VeQuanCo(g, oco.ViTri, sbBlack);
                 else if (oco.SoHuu == 2)
                     _BanCo.VeQuanCo(g, oco.ViTri, sbWhite);
@@ -133,15 +142,15 @@ namespace CSharp_CaroGame
         #region Undo, Redo
         public void Undo(Graphics g)
         {
-            if(stk_CacNuocDaDi.Count != 0)
+            if (stk_CacNuocDaDi.Count != 0)
             {
                 O_Co oco = stk_CacNuocDaDi.Pop();
 
                 stk_CacNuocDaUndo.Push(new O_Co(oco.Dong, oco.Cot, oco.ViTri, oco.SoHuu));
                 _MangOCo[oco.Dong, oco.Cot].SoHuu = 0;
                 _BanCo.XoaQuanCo(g, oco.ViTri, sbGreen);
-                LuotDi= (LuotDi == 1) ? 2 : 1;
-                
+                LuotDi = (LuotDi == 1) ? 2 : 1;
+
                 if (CheDoChoi == 2)
                 {
                     O_Co oco2 = stk_CacNuocDaDi.Pop();
@@ -162,7 +171,7 @@ namespace CSharp_CaroGame
 
                 stk_CacNuocDaDi.Push(new O_Co(oco.Dong, oco.Cot, oco.ViTri, oco.SoHuu));
                 _MangOCo[oco.Dong, oco.Cot].SoHuu = oco.SoHuu;
-                _BanCo.VeQuanCo(g, oco.ViTri, oco.SoHuu == 1 ? sbBlack:sbWhite);
+                _BanCo.VeQuanCo(g, oco.ViTri, oco.SoHuu == 1 ? sbBlack : sbWhite);
                 LuotDi = (LuotDi == 1) ? 2 : 1;
 
                 if (CheDoChoi == 2)
@@ -180,22 +189,76 @@ namespace CSharp_CaroGame
         #region Xử lý thắng thua
         public void ThongBaoKetThuc()
         {
+            MySqlConnection conn = MySQL_Connection.Connection;
+            String query = "SELECT num_win,num_lose FROM `user` WHERE `username` = '" + this.username + "'";
+            cmd = new MySqlCommand(query, conn);
+            reader = cmd.ExecuteReader();
             switch (KetThuc)
             {
                 case KETTHUC.Draw:
                     MessageBox.Show("Draw. Endgame!");
+                    conn.Close();
                     break;
                 case KETTHUC.P1:
                     MessageBox.Show("Black player wins : )");
+                    conn.Close();
                     break;
                 case KETTHUC.P2:
                     MessageBox.Show("White player wins : )");
+                    conn.Close();
                     break;
                 case KETTHUC.P:
                     MessageBox.Show("You win", "Congratulations ");
+                    if (reader.Read())
+                    {
+                        Label lb = new Label();
+                        if (_CheDoChoi == 1)
+                        {
+
+                            lb.Text = "Đánh với bạn bè Bạn thắng";
+                        }
+                        else if (_CheDoChoi == 2)
+                        {
+                            lb.Text = "Đánh với máy Bạn thắng";
+                        }
+                        win = reader.GetInt32(0) + 1;
+                        MySqlConnection con = MySQL_Connection.Connection;
+                        String str = "Update user set num_win=" + win + " where username = '" + this.username + "'";
+                        cmd = new MySqlCommand(str, con);
+                        reader.Close();
+
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+
                     break;
                 case KETTHUC.C:
                     MessageBox.Show("Game Over");
+                    if (reader.Read())
+                    {
+                        Label lb = new Label();
+                        if (_CheDoChoi == 1)
+                        {
+
+                            lb.Text = "Đánh với bạn bè Bạn thua";
+                        }
+                        else if (_CheDoChoi == 2)
+                        {
+                            lb.Text = "Đánh với máy Bạn thua";
+                        }
+                        lose = reader.GetInt32(1) + 1;
+                        MySqlConnection con = MySQL_Connection.Connection;
+                        String str = "Update user set num_lose=" + lose + " where username = '" + this.username + "'";
+                        String up = "Update user set history=CONCAT('" + "\n" + lb.Text + " " + DateTime.Now.ToString() + "',history) where username = '" + this.username + "'";
+                        cmd = new MySqlCommand(str, con);
+                        reader.Close();
+
+                        cmd.ExecuteNonQuery();
+                        cmd = new MySqlCommand(up, conn);
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+
                     break;
             }
             _SanSang = false;
@@ -203,7 +266,7 @@ namespace CSharp_CaroGame
 
         public bool KiemTraChienThang()
         {
-            if(stk_CacNuocDaDi.Count == _BanCo.SoDong * _BanCo.SoCot)
+            if (stk_CacNuocDaDi.Count == _BanCo.SoDong * _BanCo.SoCot)
             {
                 KetThuc = KETTHUC.Draw;
                 return true;
@@ -211,12 +274,12 @@ namespace CSharp_CaroGame
 
             foreach (O_Co oco in stk_CacNuocDaDi)
             {
-                if(DuyetDoc(oco.Dong, oco.Cot, oco.SoHuu) || DuyetNgang(oco.Dong, oco.Cot, oco.SoHuu) ||
+                if (DuyetDoc(oco.Dong, oco.Cot, oco.SoHuu) || DuyetNgang(oco.Dong, oco.Cot, oco.SoHuu) ||
                     DuyetCheoXuoi(oco.Dong, oco.Cot, oco.SoHuu) || DuyetCheoNguoc(oco.Dong, oco.Cot, oco.SoHuu))
                 {
-                    if (_CheDoChoi== 1)
+                    if (_CheDoChoi == 1)
                         KetThuc = oco.SoHuu == 1 ? KETTHUC.P1 : KETTHUC.P2;
-                    else if (_CheDoChoi== 2)
+                    else if (_CheDoChoi == 2)
                         KetThuc = oco.SoHuu == 1 ? KETTHUC.P : KETTHUC.C;
                     return true;
                 }
@@ -314,7 +377,7 @@ namespace CSharp_CaroGame
 
             //Xét coi 5 quân đó có sát biên trái dưới hay biên phải trên không
             //Nếu sát biên thì không thể bị chặn 2 đầu được => Thắng
-            if (crDong == _BanCo.SoDong -1 || crCot == 0 || crDong == 4 || crCot + dem == _BanCo.SoCot)
+            if (crDong == _BanCo.SoDong - 1 || crCot == 0 || crDong == 4 || crCot + dem == _BanCo.SoCot)
                 return true;
 
             //Này là trường hợp 5 quân nằm giữa bàn cờ, xét coi có bị chặn 2 đầu không
@@ -331,13 +394,13 @@ namespace CSharp_CaroGame
 
         //private long[] MangDiemTanCong = new long[7] { 0, 9, 54, 162, 1458, 13112, 118008 };
         //private long[] MangDiemPhongThu = new long[7] { 0, 3, 27, 99, 729, 6561, 59049 };
-        public void MayDanh (Graphics g)
+        public void MayDanh(Graphics g)
         {
             O_Co oco = new O_Co();
-            long Max= 0, TanCong, PhongThu, Temp;
-            for (int i=0; i< _BanCo.SoDong; i++)
-                for (int j=0; j< _BanCo.SoCot; j++)
-                    if (_MangOCo[i, j].SoHuu== 0)
+            long Max = 0, TanCong, PhongThu, Temp;
+            for (int i = 0; i < _BanCo.SoDong; i++)
+                for (int j = 0; j < _BanCo.SoCot; j++)
+                    if (_MangOCo[i, j].SoHuu == 0)
                     {
                         TanCong = TC_Doc(i, j) + TC_Ngang(i, j) + TC_CheoXuoi(i, j) + TC_CheoNguoc(i, j);
                         PhongThu = PT_Doc(i, j) + PT_Ngang(i, j) + PT_CheoXuoi(i, j) + PT_CheoNguoc(i, j);
@@ -425,7 +488,7 @@ namespace CSharp_CaroGame
             for (int Dem = 1; Dem < 6 && crDong + Dem < _BanCo.SoDong && crCot + Dem < _BanCo.SoCot; Dem++)
                 if (_MangOCo[crDong + Dem, crCot + Dem].SoHuu == 2)
                     SoQuanTa++;
-                else if (_MangOCo[crDong + Dem, crCot +Dem].SoHuu == 1)
+                else if (_MangOCo[crDong + Dem, crCot + Dem].SoHuu == 1)
                 {
                     SoQuanDich++;
                     break;
@@ -493,7 +556,7 @@ namespace CSharp_CaroGame
                 {
                     SoQuanTa++;
                     break;
-                } 
+                }
                 else if (_MangOCo[crDong + Dem, crCot].SoHuu == 1)
                     SoQuanDich++;
                 else break;

@@ -16,7 +16,6 @@ namespace CSharp_CaroGame
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new Form_CoCaRo());
             Application.Run(new Login_Form());
         }
     }

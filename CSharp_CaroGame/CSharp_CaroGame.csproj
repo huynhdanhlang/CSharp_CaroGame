@@ -52,6 +52,12 @@
   <ItemGroup>
     <Compile Include="Ban_Co.cs" />
     <Compile Include="Caro_Control.cs" />
+    <Compile Include="History.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="History.Designer.cs">
+      <DependentUpon>History.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form_CoCaRo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -74,6 +80,9 @@
     <Compile Include="O_Co.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="History.resx">
+      <DependentUpon>History.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form_CoCaRo.resx">
       <DependentUpon>Form_CoCaRo.cs</DependentUpon>
     </EmbeddedResource>

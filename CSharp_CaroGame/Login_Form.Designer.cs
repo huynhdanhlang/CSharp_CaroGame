@@ -29,7 +29,7 @@ namespace CSharp_CaroGame
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox_usernmae = new System.Windows.Forms.TextBox();
+            this.textBox_username = new System.Windows.Forms.TextBox();
             this.label_username = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox_password = new System.Windows.Forms.TextBox();
@@ -38,13 +38,14 @@ namespace CSharp_CaroGame
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // textBox_usernmae
+            // textBox_username
             // 
-            this.textBox_usernmae.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.textBox_usernmae.Location = new System.Drawing.Point(122, 90);
-            this.textBox_usernmae.Name = "textBox_usernmae";
-            this.textBox_usernmae.Size = new System.Drawing.Size(276, 32);
-            this.textBox_usernmae.TabIndex = 0;
+            this.textBox_username.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.textBox_username.Location = new System.Drawing.Point(122, 90);
+            this.textBox_username.Name = "textBox_username";
+            this.textBox_username.Size = new System.Drawing.Size(276, 32);
+            this.textBox_username.TabIndex = 0;
+            this.textBox_username.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_username_KeyDown);
             // 
             // label_username
             // 
@@ -70,6 +71,7 @@ namespace CSharp_CaroGame
             this.textBox_password.Size = new System.Drawing.Size(276, 32);
             this.textBox_password.TabIndex = 4;
             this.textBox_password.UseSystemPasswordChar = true;
+            this.textBox_password.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_password_KeyDown);
             // 
             // button_login
             // 
@@ -101,7 +103,7 @@ namespace CSharp_CaroGame
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label_username);
-            this.Controls.Add(this.textBox_usernmae);
+            this.Controls.Add(this.textBox_username);
             this.Name = "Login_Form";
             this.Text = "Login";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -112,7 +114,7 @@ namespace CSharp_CaroGame
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox_usernmae;
+        private System.Windows.Forms.TextBox textBox_username;
         private System.Windows.Forms.Label label_username;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
