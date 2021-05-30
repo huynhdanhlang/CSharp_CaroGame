@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
@@ -43,6 +44,7 @@ namespace CSharp_CaroGame
             this.Text = "Login as " + username;
             textBox_username.Enabled = false;
             Control.getUsername(username);
+
         }
 
 
@@ -75,7 +77,9 @@ namespace CSharp_CaroGame
         }
         private void Form_CoCaRo_Load(object sender, EventArgs e)
         {
-
+            btn_Redo.Visible = true;
+            btn_Undo.Visible = true;
+            pgb_Time.Visible = true;
         }
 
         private void Draw_Panel_Paint(object sender, PaintEventArgs e)
@@ -101,7 +105,6 @@ namespace CSharp_CaroGame
                 socket.isServer = false;
                 panel_banco.Enabled = false;
                 Listen();
-                MessageBox.Show("Kết nối thành công");
             }
             timer1.Stop();
             pgb_Time.Value = 0;
@@ -317,10 +320,21 @@ namespace CSharp_CaroGame
                 new[] { "\r\n", "\r", "\n" },
                 StringSplitOptions.None
             );
-                Label[] lb = new Label[25];
-                for (int i = 1; i < lines.Length; i++)
+                string filePath = @"C:\\history.txt";
+                if (System.IO.File.Exists(filePath))
                 {
-                    String ss = lines[i].ToString();
+                    System.IO.File.WriteAllLines(filePath, lines);
+                }
+                String[] line1 = File.ReadLines(filePath).Take(11).ToArray();
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.WriteAllLines(filePath, line1);
+                }
+                Label[] lb = new Label[11];
+                int linecount = line1.Length;
+                for (int i = 1; i < linecount; i++)
+                {
+                    String ss = line1[i].ToString();
 
                     if (ss.Contains("thua"))
                     {

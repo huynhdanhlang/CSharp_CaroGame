@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -53,7 +54,9 @@ namespace CSharp_CaroGame
             stk_CacNuocDaDi = new Stack<O_Co>();
             stk_CacNuocDaUndo = new Stack<O_Co>();
             LuotDi = 1;
+
         }
+
         public void getUsername(String username)
         {
             this.username = username;
@@ -224,15 +227,19 @@ namespace CSharp_CaroGame
                             lb.Text = "Đánh với bạn bè qua LAN Bạn thắng";
                         }
                         win = reader.GetInt32(0) + 1;
+                        string text = File.ReadAllText(@"C:\history.txt");
                         MySqlConnection con = MySQL_Connection.Connection;
                         String str = "Update user set num_win=" + win + " where username = '" + this.username + "'";
                         String up = "Update user set history=CONCAT('" + "\n" + lb.Text + " " + DateTime.Now.ToString() + "',history) where username = '" + this.username + "'";
-
+                        String uptext = "Update user set history='" + text + "' where username = '" + this.username + "'";
                         cmd = new MySqlCommand(str, con);
                         reader.Close();
                         cmd.ExecuteNonQuery();
+                        cmd = new MySqlCommand(uptext, conn);
+                        cmd.ExecuteNonQuery();
                         cmd = new MySqlCommand(up, conn);
                         cmd.ExecuteNonQuery();
+
                         conn.Close();
                     }
                     conn.Close();
@@ -252,15 +259,19 @@ namespace CSharp_CaroGame
                             lb.Text = "Đánh với bạn bè qua LAN Bạn thắng";
                         }
                         win = reader.GetInt32(0) + 1;
+                        string text = File.ReadAllText(@"C:\history.txt");
                         MySqlConnection con = MySQL_Connection.Connection;
                         String str = "Update user set num_win=" + win + " where username = '" + this.username + "'";
                         String up = "Update user set history=CONCAT('" + "\n" + lb.Text + " " + DateTime.Now.ToString() + "',history) where username = '" + this.username + "'";
-
+                        String uptext = "Update user set history='" + text + "' where username = '" + this.username + "'";
                         cmd = new MySqlCommand(str, con);
                         reader.Close();
                         cmd.ExecuteNonQuery();
+                        cmd = new MySqlCommand(uptext, conn);
+                        cmd.ExecuteNonQuery();
                         cmd = new MySqlCommand(up, conn);
                         cmd.ExecuteNonQuery();
+
                         conn.Close();
                     }
                     conn.Close();
@@ -284,15 +295,20 @@ namespace CSharp_CaroGame
                             lb.Text = "Đánh với bạn bè qua LAN Bạn thắng";
                         }
                         win = reader.GetInt32(0) + 1;
+                        string text = File.ReadAllText(@"C:\history.txt");
                         MySqlConnection con = MySQL_Connection.Connection;
                         String str = "Update user set num_win=" + win + " where username = '" + this.username + "'";
                         String up = "Update user set history=CONCAT('" + "\n" + lb.Text + " " + DateTime.Now.ToString() + "',history) where username = '" + this.username + "'";
+                        String uptext = "Update user set history='" + text + "' where username = '" + this.username + "'";
 
                         cmd = new MySqlCommand(str, con);
                         reader.Close();
                         cmd.ExecuteNonQuery();
+                        cmd = new MySqlCommand(uptext, conn);
+                        cmd.ExecuteNonQuery();
                         cmd = new MySqlCommand(up, conn);
                         cmd.ExecuteNonQuery();
+
                         conn.Close();
                     }
 
@@ -316,15 +332,21 @@ namespace CSharp_CaroGame
                             lb.Text = "Đánh với bạn bè qua LAN Bạn thua";
                         }
                         lose = reader.GetInt32(1) + 1;
+                        string text = File.ReadAllText(@"C:\history.txt");
                         MySqlConnection con = MySQL_Connection.Connection;
                         String str = "Update user set num_lose=" + lose + " where username = '" + this.username + "'";
                         String up = "Update user set history=CONCAT('" + "\n" + lb.Text + " " + DateTime.Now.ToString() + "',history) where username = '" + this.username + "'";
+                        String uptext = "Update user set history='" + text + "' where username = '" + this.username + "'";
+
                         cmd = new MySqlCommand(str, con);
                         reader.Close();
 
                         cmd.ExecuteNonQuery();
+                        cmd = new MySqlCommand(uptext, conn);
+                        cmd.ExecuteNonQuery();
                         cmd = new MySqlCommand(up, conn);
                         cmd.ExecuteNonQuery();
+
                         conn.Close();
                     }
 

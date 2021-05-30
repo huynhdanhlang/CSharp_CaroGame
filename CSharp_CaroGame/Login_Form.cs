@@ -17,6 +17,7 @@ namespace CSharp_CaroGame
         String username, password;
         MySqlDataReader reader;
         MySqlCommand cmd;
+
         public Login_Form()
         {
             InitializeComponent();
@@ -56,6 +57,7 @@ namespace CSharp_CaroGame
                 conn.Close();
                 frm_caro.Show();
                 conn.Close();
+
             }
             else
             {
