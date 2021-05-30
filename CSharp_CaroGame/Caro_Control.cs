@@ -206,6 +206,7 @@ namespace CSharp_CaroGame
             String query = "SELECT num_win,num_lose FROM `user` WHERE `username` = '" + this.username + "'";
             cmd = new MySqlCommand(query, conn);
             reader = cmd.ExecuteReader();
+            string text = File.ReadAllText(@"D:\history.txt");
             switch (KetThuc)
             {
                 case KETTHUC.Draw:
@@ -227,7 +228,7 @@ namespace CSharp_CaroGame
                             lb.Text = "Đánh với bạn bè qua LAN Bạn thắng";
                         }
                         win = reader.GetInt32(0) + 1;
-                        string text = File.ReadAllText(@"C:\history.txt");
+
                         MySqlConnection con = MySQL_Connection.Connection;
                         String str = "Update user set num_win=" + win + " where username = '" + this.username + "'";
                         String up = "Update user set history=CONCAT('" + "\n" + lb.Text + " " + DateTime.Now.ToString() + "',history) where username = '" + this.username + "'";
@@ -258,7 +259,7 @@ namespace CSharp_CaroGame
                             lb.Text = "Đánh với bạn bè qua LAN Bạn thắng";
                         }
                         win = reader.GetInt32(0) + 1;
-                        string text = File.ReadAllText(@"C:\history.txt");
+
                         MySqlConnection con = MySQL_Connection.Connection;
                         String str = "Update user set num_win=" + win + " where username = '" + this.username + "'";
                         String up = "Update user set history=CONCAT('" + "\n" + lb.Text + " " + DateTime.Now.ToString() + "',history) where username = '" + this.username + "'";
@@ -281,7 +282,7 @@ namespace CSharp_CaroGame
                         Label lb = new Label();
                         lb.Text = "Đánh với máy Bạn thắng";
                         win = reader.GetInt32(0) + 1;
-                        string text = File.ReadAllText(@"C:\history.txt");
+
                         MySqlConnection con = MySQL_Connection.Connection;
                         String str = "Update user set num_win=" + win + " where username = '" + this.username + "'";
                         String up = "Update user set history=CONCAT('" + "\n" + lb.Text + " " + DateTime.Now.ToString() + "',history) where username = '" + this.username + "'";
@@ -304,7 +305,7 @@ namespace CSharp_CaroGame
                         Label lb = new Label();
                         lb.Text = "Đánh với máy Bạn thua";
                         lose = reader.GetInt32(1) + 1;
-                        string text = File.ReadAllText(@"C:\history.txt");
+
                         MySqlConnection con = MySQL_Connection.Connection;
                         String str = "Update user set num_lose=" + lose + " where username = '" + this.username + "'";
                         String up = "Update user set history=CONCAT('" + "\n" + lb.Text + " " + DateTime.Now.ToString() + "',history) where username = '" + this.username + "'";

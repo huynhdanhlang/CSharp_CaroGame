@@ -320,16 +320,18 @@ namespace CSharp_CaroGame
                 new[] { "\r\n", "\r", "\n" },
                 StringSplitOptions.None
             );
-                string filePath = @"C:\\history.txt";
-                if (System.IO.File.Exists(filePath))
+                string filePath = @"D:\\history.txt";
+                if (!System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.WriteAllLines(filePath, lines);
+                }
+                else
                 {
                     System.IO.File.WriteAllLines(filePath, lines);
                 }
                 String[] line1 = File.ReadLines(filePath).Take(11).ToArray();
-                if (System.IO.File.Exists(filePath))
-                {
-                    System.IO.File.WriteAllLines(filePath, line1);
-                }
+
+                System.IO.File.WriteAllLines(filePath, line1);
                 Label[] lb = new Label[11];
                 int linecount = line1.Length;
                 for (int i = 1; i < linecount; i++)
