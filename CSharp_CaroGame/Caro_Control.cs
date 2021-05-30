@@ -31,7 +31,7 @@ namespace CSharp_CaroGame
 
         private O_Co[,] _MangOCo;
         private Ban_Co _BanCo;
-        private int LuotDi;
+        public int LuotDi;
         private int _CheDoChoi; //1: PvP, 2: PvC, 3: PvP in LAN
         public bool _SanSang;
         private Stack<O_Co> stk_CacNuocDaDi;
@@ -114,29 +114,39 @@ namespace CSharp_CaroGame
             }
         }
 
-        public void Reset(Graphics g)
-        {
-            _SanSang = false;
-            stk_CacNuocDaDi = new Stack<O_Co>();
-            stk_CacNuocDaUndo = new Stack<O_Co>();
-            LuotDi = 1;
-            KhoiTaoMangOCo();
-            VeBanCo(g);
-        }
 
         public void StartPvP(Graphics g)
         {
             _SanSang = true;
             _CheDoChoi = 1;
-            /*stk_CacNuocDaDi = new List<O_Co>();
+            LuotDi = 1;
+            stk_CacNuocDaDi = new Stack<O_Co>();
+            stk_CacNuocDaUndo = new Stack<O_Co>();
             KhoiTaoMangOCo();
-            VeBanCo(g);*/
+            VeBanCo(g);
         }
 
         public void StartPvC(Graphics g)
         {
             _SanSang = true;
             _CheDoChoi = 2;
+            LuotDi = 1;
+            stk_CacNuocDaDi = new Stack<O_Co>();
+            stk_CacNuocDaUndo = new Stack<O_Co>();
+            KhoiTaoMangOCo();
+            VeBanCo(g);
+        }
+
+        public void StartLAN(Graphics g)
+        {
+            _SanSang = true;
+            LuotDi = 1;
+            _CheDoChoi = 3;
+            stk_CacNuocDaDi = new Stack<O_Co>();
+            stk_CacNuocDaUndo = new Stack<O_Co>();
+            KhoiTaoMangOCo();
+            VeBanCo(g);
+
         }
 
         #region Undo, Redo
@@ -201,10 +211,58 @@ namespace CSharp_CaroGame
                     break;
                 case KETTHUC.P1:
                     MessageBox.Show("Black player wins : )");
+                    if (reader.Read())
+                    {
+                        Label lb = new Label();
+                        if (_CheDoChoi == 1)
+                        {
+
+                            lb.Text = "Đánh với bạn bè Bạn thắng";
+                        }
+                        else if (_CheDoChoi == 3)
+                        {
+                            lb.Text = "Đánh với bạn bè qua LAN Bạn thắng";
+                        }
+                        win = reader.GetInt32(0) + 1;
+                        MySqlConnection con = MySQL_Connection.Connection;
+                        String str = "Update user set num_win=" + win + " where username = '" + this.username + "'";
+                        String up = "Update user set history=CONCAT('" + "\n" + lb.Text + " " + DateTime.Now.ToString() + "',history) where username = '" + this.username + "'";
+
+                        cmd = new MySqlCommand(str, con);
+                        reader.Close();
+                        cmd.ExecuteNonQuery();
+                        cmd = new MySqlCommand(up, conn);
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
                     conn.Close();
                     break;
                 case KETTHUC.P2:
                     MessageBox.Show("White player wins : )");
+                    if (reader.Read())
+                    {
+                        Label lb = new Label();
+                        if (_CheDoChoi == 1)
+                        {
+
+                            lb.Text = "Đánh với bạn bè Bạn thắng";
+                        }
+                        else if (_CheDoChoi == 3)
+                        {
+                            lb.Text = "Đánh với bạn bè qua LAN Bạn thắng";
+                        }
+                        win = reader.GetInt32(0) + 1;
+                        MySqlConnection con = MySQL_Connection.Connection;
+                        String str = "Update user set num_win=" + win + " where username = '" + this.username + "'";
+                        String up = "Update user set history=CONCAT('" + "\n" + lb.Text + " " + DateTime.Now.ToString() + "',history) where username = '" + this.username + "'";
+
+                        cmd = new MySqlCommand(str, con);
+                        reader.Close();
+                        cmd.ExecuteNonQuery();
+                        cmd = new MySqlCommand(up, conn);
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
                     conn.Close();
                     break;
                 case KETTHUC.P:
@@ -220,6 +278,10 @@ namespace CSharp_CaroGame
                         else if (_CheDoChoi == 2)
                         {
                             lb.Text = "Đánh với máy Bạn thắng";
+                        }
+                        else if (_CheDoChoi == 3)
+                        {
+                            lb.Text = "Đánh với bạn bè qua LAN Bạn thắng";
                         }
                         win = reader.GetInt32(0) + 1;
                         MySqlConnection con = MySQL_Connection.Connection;
@@ -249,6 +311,10 @@ namespace CSharp_CaroGame
                         {
                             lb.Text = "Đánh với máy Bạn thua";
                         }
+                        else if (_CheDoChoi == 3)
+                        {
+                            lb.Text = "Đánh với bạn bè qua LAN Bạn thua";
+                        }
                         lose = reader.GetInt32(1) + 1;
                         MySqlConnection con = MySQL_Connection.Connection;
                         String str = "Update user set num_lose=" + lose + " where username = '" + this.username + "'";
@@ -263,6 +329,7 @@ namespace CSharp_CaroGame
                     }
 
                     break;
+
             }
             _SanSang = false;
         }
@@ -280,7 +347,7 @@ namespace CSharp_CaroGame
                 if (DuyetDoc(oco.Dong, oco.Cot, oco.SoHuu) || DuyetNgang(oco.Dong, oco.Cot, oco.SoHuu) ||
                     DuyetCheoXuoi(oco.Dong, oco.Cot, oco.SoHuu) || DuyetCheoNguoc(oco.Dong, oco.Cot, oco.SoHuu))
                 {
-                    if (_CheDoChoi == 1)
+                    if (_CheDoChoi == 1 || _CheDoChoi == 3)
                         KetThuc = oco.SoHuu == 1 ? KETTHUC.P1 : KETTHUC.P2;
                     else if (_CheDoChoi == 2)
                         KetThuc = oco.SoHuu == 1 ? KETTHUC.P : KETTHUC.C;

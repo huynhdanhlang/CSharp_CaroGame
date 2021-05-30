@@ -5,7 +5,9 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -15,14 +17,24 @@ namespace CSharp_CaroGame
     {
         private Caro_Control Control;
         private Graphics grap;
+        SocketManager socket;
         String username;
+        public static int cdStep = 100;
+        public static int cdTime = 10000;
+        public static int cdInterval = 100;
         public Form_CoCaRo()
         {
+
             InitializeComponent();
             Control = new Caro_Control();
+            socket = new SocketManager();
             Control.KhoiTaoMangOCo();
-
             grap = panel_banco.CreateGraphics();
+            exitLANToolStripMenuItem.Click += btnExit_Click;
+            pgb_Time.Value = 0;
+            pgb_Time.Maximum = cdTime;
+            pgb_Time.Step = cdStep;
+            timer1.Interval = cdInterval;
         }
         public void initForm(String username)
         {
@@ -34,7 +46,33 @@ namespace CSharp_CaroGame
         }
 
 
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            DialogResult dlr = MessageBox.Show("Do you want to exit!", "Exit", MessageBoxButtons.YesNo); ;
+            if (Control.CheDoChoi != 3)
+            {
+                if (dlr == DialogResult.Yes)
+                {
 
+                    Application.Exit();
+                }
+            }
+
+            else
+            {
+                if (dlr == DialogResult.Yes)
+                {
+                    try
+                    {
+                        socket.Send(new SocketData((int)SocketCommand.QUIT, "", new Point()));
+                    }
+                    catch { }
+
+                    Application.Exit();
+                }
+            }
+
+        }
         private void Form_CoCaRo_Load(object sender, EventArgs e)
         {
 
@@ -48,10 +86,25 @@ namespace CSharp_CaroGame
         #region Mấy sự kiện Click
         private void btn_LAN_Click(object sender, EventArgs e)
         {
-            Form_KetNoi frm_ketnoi = new Form_KetNoi();
-            frm_ketnoi.Show();
-            //if() Nhan Connect thi moi lam tiep
-            SetButton();
+
+            grap.Clear(panel_banco.BackColor);
+            Control.StartLAN(grap);
+            socket.IP = textBox_IP.Text;
+            if (!socket.ConnectServer())
+            {
+                socket.isServer = true;
+                panel_banco.Enabled = true;
+                socket.CreateServer();
+            }
+            else
+            {
+                socket.isServer = false;
+                panel_banco.Enabled = false;
+                Listen();
+                MessageBox.Show("Kết nối thành công");
+            }
+            timer1.Stop();
+            pgb_Time.Value = 0;
         }
 
         private void panel_banco_MouseClick(object sender, MouseEventArgs e)
@@ -61,46 +114,160 @@ namespace CSharp_CaroGame
 
             if (Control.DanhCo(e.X, e.Y, grap))
             {
-                if (Control.KiemTraChienThang())
+                if (Control.CheDoChoi == 1)
                 {
-                    Control.ThongBaoKetThuc();
-                    Replay();
-                }
-                else
-                {
-                    if (Control.CheDoChoi == 2)
+                    if (Control.KiemTraChienThang())
                     {
-                        Control.MayDanh(grap);
-                        if (Control.KiemTraChienThang())
-                        {
-                            Control.ThongBaoKetThuc();
-                            Replay();
-                        }
+                        timer1.Stop();
+                        Control.ThongBaoKetThuc();
+                        return;
                     }
                 }
+                else if (Control.CheDoChoi == 2)
+                {
+                    Control.MayDanh(grap);
+                    if (Control.KiemTraChienThang())
+                    {
+                        timer1.Stop();
+                        Control.ThongBaoKetThuc();
+                        return;
+                    }
+                }
+
+                else if (Control.CheDoChoi == 3)
+                {
+                    panel_banco.Enabled = false;
+                    socket.Send(new SocketData((int)SocketCommand.SEND_POINT, "", e.Location));
+                    Listen();
+                    if (Control.KiemTraChienThang())
+                    {
+                        timer1.Stop();
+                        Control.ThongBaoKetThuc();
+                        return;
+                    }
+                }
+
             }
 
-
+            timer1.Start();
+            pgb_Time.Value = 0;
 
         }
 
+        void Listen()
+        {
+
+            Thread listenThread = new Thread(() =>
+            {
+                try
+                {
+                    SocketData data = (SocketData)socket.Receive();
+
+                    ProcessData(data);
+                }
+                catch { }
+            });
+            listenThread.IsBackground = true;
+            listenThread.Start();
+
+        }
+
+        private void ProcessData(SocketData data)
+        {
+            switch (data.Command)
+            {
+                case (int)SocketCommand.NOTIFY:
+                    MessageBox.Show(data.Message);
+                    break;
+
+                case (int)SocketCommand.NEW_GAME:
+                    this.Invoke((MethodInvoker)(() =>
+                    {
+                        NewGame();
+                        panel_banco.Enabled = false;
+                    }));
+                    break;
+
+                case (int)SocketCommand.QUIT:
+                    timer1.Stop();
+                    MessageBox.Show("Người chơi đã thoát!");
+                    Control._SanSang = false;
+
+                    break;
+
+                case (int)SocketCommand.SEND_POINT:
+                    this.Invoke((MethodInvoker)(() =>
+                    {
+                        pgb_Time.Value = 0;
+                        timer1.Start();
+                        OtherPlayerMark(data.Point);
+                    }));
+
+                    break;
+                case (int)SocketCommand.END_GAME:
+                    break;
+                default:
+                    break;
+            }
+            Listen();
+        }
+        public void OtherPlayerMark(Point point)
+        {
+            if (!Control.SanSang)
+                return;
+            if (Control.DanhCo(point.X, point.Y, grap))
+            {
+                panel_banco.Enabled = true;
+                if (Control.KiemTraChienThang())
+                {
+                    timer1.Stop();
+                    Control.ThongBaoKetThuc();
+                }
+            }
+        }
         private void btn_Frient_Click(object sender, EventArgs e)
         {
-            //grap.Clear(panel_banco.BackColor);
+            grap.Clear(panel_banco.BackColor);
             Control.StartPvP(grap);
-
-            SetButton();
+            pgb_Time.Value = 0;
+            timer1.Start();
         }
 
         private void btn_Replay_Click(object sender, EventArgs e)
         {
-            Replay();
+
+            if (Control.CheDoChoi == 0)
+            {
+                MessageBox.Show("Chưa chọn chế độ chơi!", "Thông báo");
+            }
+            else if (Control.CheDoChoi == 1)
+            {
+                grap.Clear(panel_banco.BackColor);
+                Control.StartPvP(grap);
+            }
+            else if (Control.CheDoChoi == 2)
+            {
+                grap.Clear(panel_banco.BackColor);
+                Control.StartPvC(grap);
+            }
+            else if (Control.CheDoChoi == 3)
+            {
+                socket.Send(new SocketData((int)SocketCommand.NEW_GAME, "", new Point()));
+                grap.Clear(panel_banco.BackColor);
+                Control.StartLAN(grap);
+                panel_banco.Enabled = true;
+            }
+
+            timer1.Start();
+            pgb_Time.Value = 0;
         }
 
         private void btn_Computer_Click(object sender, EventArgs e)
         {
+            grap.Clear(panel_banco.BackColor);
             Control.StartPvC(grap);
-            SetButton();
+            pgb_Time.Value = 0;
+            timer1.Start();
         }
         #endregion
 
@@ -116,35 +283,14 @@ namespace CSharp_CaroGame
         }
         #endregion
 
-        public void SetButton()
+        private void NewGame()
         {
-            btn_Frient.Enabled = false;
-            btn_Computer.Enabled = false;
-            btn_LAN.Enabled = false;
-            btn_Replay.Enabled = true;
+            Control.StartLAN(grap);
 
-            btn_Undo.Visible = true;
-            btn_Redo.Visible = true;
-            label1.Visible = true;
-            pgb_Time.Visible = true;
+            timer1.Start();
+            pgb_Time.Value = 0;
         }
 
-        public void Replay()
-        {
-            Control.Reset(grap);
-            grap.Clear(panel_banco.BackColor);
-            //Control.StartPvP(grap);
-
-            btn_Frient.Enabled = true;
-            btn_Computer.Enabled = true;
-            btn_LAN.Enabled = true;
-            btn_Replay.Enabled = false;
-
-            btn_Undo.Visible = false;
-            btn_Redo.Visible = false;
-            label1.Visible = false;
-            pgb_Time.Visible = false;
-        }
 
         private void btn_History_Click(object sender, EventArgs e)
         {
@@ -206,6 +352,25 @@ namespace CSharp_CaroGame
                 conn.Close();
             }
 
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            pgb_Time.PerformStep();
+            if (pgb_Time.Value >= pgb_Time.Maximum)
+            {
+                timer1.Stop();
+                Control.ThongBaoKetThuc();
+            }
+        }
+
+        private void Form_CoCaRo_Shown(object sender, EventArgs e)
+        {
+            textBox_IP.Text = socket.GetLocalIPv4(NetworkInterfaceType.Wireless80211);
+            if (string.IsNullOrEmpty(textBox_IP.Text))
+            {
+                textBox_IP.Text = socket.GetLocalIPv4(NetworkInterfaceType.Ethernet);
+            }
         }
     }
 }
