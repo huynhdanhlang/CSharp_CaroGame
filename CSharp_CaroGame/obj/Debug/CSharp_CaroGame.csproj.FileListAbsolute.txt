@@ -65,7 +65,6 @@ C:\Users\DELL\source\repos\CSharp_CaroGame\CSharp_CaroGame\bin\Debug\System.Nume
 C:\Users\DELL\source\repos\CSharp_CaroGame\CSharp_CaroGame\bin\Debug\MySql.Data.xml
 C:\Users\DELL\source\repos\CSharp_CaroGame\CSharp_CaroGame\obj\Debug\CSharp_CaroGame.csprojAssemblyReference.cache
 C:\Users\DELL\source\repos\CSharp_CaroGame\CSharp_CaroGame\obj\Debug\CSharp_CaroGame.Form_CoCaRo.resources
-C:\Users\DELL\source\repos\CSharp_CaroGame\CSharp_CaroGame\obj\Debug\CSharp_CaroGame.Form_KetNoi.resources
 C:\Users\DELL\source\repos\CSharp_CaroGame\CSharp_CaroGame\obj\Debug\CSharp_CaroGame.Login_Form.resources
 C:\Users\DELL\source\repos\CSharp_CaroGame\CSharp_CaroGame\obj\Debug\CSharp_CaroGame.Properties.Resources.resources
 C:\Users\DELL\source\repos\CSharp_CaroGame\CSharp_CaroGame\obj\Debug\CSharp_CaroGame.csproj.GenerateResource.cache
@@ -74,3 +73,4 @@ C:\Users\DELL\source\repos\CSharp_CaroGame\CSharp_CaroGame\obj\Debug\CSharp_Caro
 C:\Users\DELL\source\repos\CSharp_CaroGame\CSharp_CaroGame\obj\Debug\CSharp_CaroGame.exe
 C:\Users\DELL\source\repos\CSharp_CaroGame\CSharp_CaroGame\obj\Debug\CSharp_CaroGame.pdb
 C:\Users\ASUS\source\repos\CSharp_CaroGame\CSharp_CaroGame\obj\Debug\CSharp_CaroGame.History.resources
+C:\Users\DELL\source\repos\CSharp_CaroGame\CSharp_CaroGame\obj\Debug\CSharp_CaroGame.History.resources
