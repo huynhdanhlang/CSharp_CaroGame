@@ -35,6 +35,7 @@ namespace CSharp_CaroGame
             this.textBox_password = new System.Windows.Forms.TextBox();
             this.button_login = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btn_SignUp = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -75,7 +76,7 @@ namespace CSharp_CaroGame
             // 
             // button_login
             // 
-            this.button_login.Location = new System.Drawing.Point(122, 221);
+            this.button_login.Location = new System.Drawing.Point(193, 221);
             this.button_login.Name = "button_login";
             this.button_login.Size = new System.Drawing.Size(93, 39);
             this.button_login.TabIndex = 5;
@@ -93,11 +94,22 @@ namespace CSharp_CaroGame
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
             // 
+            // btn_SignUp
+            // 
+            this.btn_SignUp.Location = new System.Drawing.Point(292, 221);
+            this.btn_SignUp.Name = "btn_SignUp";
+            this.btn_SignUp.Size = new System.Drawing.Size(106, 39);
+            this.btn_SignUp.TabIndex = 6;
+            this.btn_SignUp.Text = "Sign up";
+            this.btn_SignUp.UseVisualStyleBackColor = true;
+            this.btn_SignUp.Click += new System.EventHandler(this.btn_SignUp_Click);
+            // 
             // Login_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(791, 370);
+            this.Controls.Add(this.btn_SignUp);
             this.Controls.Add(this.button_login);
             this.Controls.Add(this.textBox_password);
             this.Controls.Add(this.label1);
@@ -120,5 +132,6 @@ namespace CSharp_CaroGame
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox_password;
         private System.Windows.Forms.Button button_login;
+        private System.Windows.Forms.Button btn_SignUp;
     }
 }

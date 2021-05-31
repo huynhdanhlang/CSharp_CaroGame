@@ -40,6 +40,14 @@ namespace CSharp_CaroGame
             }
         }
 
+        private void btn_SignUp_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Sign_up sign_up = new Sign_up();
+            sign_up.Show();
+            sign_up.Closed += (s, args) => this.Show();
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             MySqlConnection conn = MySQL_Connection.Connection;
