@@ -99,12 +99,14 @@ namespace CSharp_CaroGame
                 socket.isServer = true;
                 panel_banco.Enabled = true;
                 socket.CreateServer();
+
             }
             else
             {
                 socket.isServer = false;
                 panel_banco.Enabled = false;
                 Listen();
+                MessageBox.Show("Kết nối thành công. Trận đấu sẵn sàng");
             }
             timer1.Stop();
             pgb_Time.Value = 0;
@@ -179,9 +181,6 @@ namespace CSharp_CaroGame
         {
             switch (data.Command)
             {
-                case (int)SocketCommand.NOTIFY:
-                    MessageBox.Show(data.Message);
-                    break;
 
                 case (int)SocketCommand.NEW_GAME:
                     this.Invoke((MethodInvoker)(() =>
@@ -208,6 +207,22 @@ namespace CSharp_CaroGame
 
                     break;
                 case (int)SocketCommand.END_GAME:
+                    break;
+                case (int)SocketCommand.UNDO:
+                    this.Invoke((MethodInvoker)(() =>
+                    {
+                        timer1.Start();
+                        pgb_Time.Value = 0;
+                        Control.Undo(grap);
+                    }));
+                    break;
+                case (int)SocketCommand.REDO:
+                    this.Invoke((MethodInvoker)(() =>
+                    {
+                        timer1.Start();
+                        pgb_Time.Value = 0;
+                        Control.Redo(grap);
+                    }));
                     break;
                 default:
                     break;
@@ -278,11 +293,23 @@ namespace CSharp_CaroGame
         private void btn_Undo_Click(object sender, EventArgs e)
         {
             Control.Undo(grap);
+            timer1.Start();
+            pgb_Time.Value = 0;
+            if (Control.CheDoChoi == 3)
+            {
+                socket.Send(new SocketData((int)SocketCommand.UNDO, "", new Point()));
+            }
         }
 
         private void btn_Redo_Click(object sender, EventArgs e)
         {
             Control.Redo(grap);
+            timer1.Start();
+            pgb_Time.Value = 0;
+            if (Control.CheDoChoi == 3)
+            {
+                socket.Send(new SocketData((int)SocketCommand.REDO, "", new Point()));
+            }
         }
         #endregion
 
@@ -321,16 +348,8 @@ namespace CSharp_CaroGame
                 StringSplitOptions.None
             );
                 string filePath = @"D:\\history.txt";
-                if (!System.IO.File.Exists(filePath))
-                {
-                    System.IO.File.WriteAllLines(filePath, lines);
-                }
-                else
-                {
-                    System.IO.File.WriteAllLines(filePath, lines);
-                }
+                System.IO.File.WriteAllLines(filePath, lines);
                 String[] line1 = File.ReadLines(filePath).Take(11).ToArray();
-
                 System.IO.File.WriteAllLines(filePath, line1);
                 Label[] lb = new Label[11];
                 int linecount = line1.Length;

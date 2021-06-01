@@ -66,7 +66,8 @@ namespace CSharp_CaroGame
         SEND_POINT,
         NEW_GAME,
         QUIT,
-        NOTIFY,
         END_GAME,
+        UNDO,
+        REDO
     }
 }
