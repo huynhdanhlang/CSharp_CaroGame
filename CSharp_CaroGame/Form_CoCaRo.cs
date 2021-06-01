@@ -124,7 +124,6 @@ namespace CSharp_CaroGame
                 panel_banco.Enabled = false;
                 Listen();
                 MessageBox.Show("Successful connection. Match ready.");
-                MessageBox.Show("Kết nối thành công. Trận đấu sẵn sàng");
                 socket.Send(new SocketData((int)SocketCommand.MESSNAME, textBox_username.Text, new Point()));
             }
             timer1.Stop();
