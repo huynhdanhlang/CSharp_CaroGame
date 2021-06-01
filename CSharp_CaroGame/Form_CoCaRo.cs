@@ -123,13 +123,9 @@ namespace CSharp_CaroGame
                 socket.isServer = false;
                 panel_banco.Enabled = false;
                 Listen();
-<<<<<<< HEAD
                 MessageBox.Show("Successful connection. Match ready.");
-=======
                 MessageBox.Show("Kết nối thành công. Trận đấu sẵn sàng");
                 socket.Send(new SocketData((int)SocketCommand.MESSNAME, textBox_username.Text, new Point()));
-
->>>>>>> 7ec380b763139ef80419e1396d534b8f61813c3b
             }
             timer1.Stop();
             pgb_Time.Value = 0;
@@ -170,10 +166,6 @@ namespace CSharp_CaroGame
                             return;
                         }
                     }
-<<<<<<< HEAD
-=======
-
->>>>>>> 7ec380b763139ef80419e1396d534b8f61813c3b
                 }
 
                 else if (Control.CheDoChoi == 3)
