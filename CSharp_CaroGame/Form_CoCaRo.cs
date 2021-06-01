@@ -124,7 +124,6 @@ namespace CSharp_CaroGame
                 panel_banco.Enabled = false;
                 Listen();
                 MessageBox.Show("Successful connection. Match ready.");
-                socket.Send(new SocketData((int)SocketCommand.MESSNAME, textBox_username.Text, new Point()));
             }
             timer1.Stop();
             pgb_Time.Value = 0;
@@ -207,13 +206,6 @@ namespace CSharp_CaroGame
 
             switch (data.Command)
             {
-                case (int)SocketCommand.MESSNAME:
-                    this.Invoke((MethodInvoker)(() =>
-                    {
-                        Control.username1 = data.Message;
-
-                    }));
-                    break;
                 case (int)SocketCommand.NEW_GAME:
                     this.Invoke((MethodInvoker)(() =>
                     {

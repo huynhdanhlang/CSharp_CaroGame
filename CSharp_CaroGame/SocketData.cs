@@ -63,7 +63,6 @@ namespace CSharp_CaroGame
 
     public enum SocketCommand
     {
-        MESSNAME,
         SEND_POINT,
         NEW_GAME,
         QUIT,
