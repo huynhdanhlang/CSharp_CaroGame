@@ -123,7 +123,13 @@ namespace CSharp_CaroGame
                 socket.isServer = false;
                 panel_banco.Enabled = false;
                 Listen();
+<<<<<<< HEAD
                 MessageBox.Show("Successful connection. Match ready.");
+=======
+                MessageBox.Show("Kết nối thành công. Trận đấu sẵn sàng");
+                socket.Send(new SocketData((int)SocketCommand.MESSNAME, textBox_username.Text, new Point()));
+
+>>>>>>> 7ec380b763139ef80419e1396d534b8f61813c3b
             }
             timer1.Stop();
             pgb_Time.Value = 0;
@@ -164,6 +170,10 @@ namespace CSharp_CaroGame
                             return;
                         }
                     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7ec380b763139ef80419e1396d534b8f61813c3b
                 }
 
                 else if (Control.CheDoChoi == 3)
@@ -203,12 +213,20 @@ namespace CSharp_CaroGame
 
         private void ProcessData(SocketData data)
         {
+
             switch (data.Command)
             {
+                case (int)SocketCommand.MESSNAME:
+                    this.Invoke((MethodInvoker)(() =>
+                    {
+                        Control.username1 = data.Message;
 
+                    }));
+                    break;
                 case (int)SocketCommand.NEW_GAME:
                     this.Invoke((MethodInvoker)(() =>
                     {
+
                         NewGame();
                         panel_banco.Enabled = false;
                     }));
@@ -231,6 +249,7 @@ namespace CSharp_CaroGame
 
                     break;
                 case (int)SocketCommand.END_GAME:
+
                     break;
                 case (int)SocketCommand.UNDO:
                     this.Invoke((MethodInvoker)(() =>
@@ -267,7 +286,7 @@ namespace CSharp_CaroGame
                 }
             }
         }
-        
+
         private void btn_Replay_Click(object sender, EventArgs e)
         {
 
@@ -296,7 +315,7 @@ namespace CSharp_CaroGame
             }
         }
 
-        
+
         #endregion
 
         #region Undo, Redo
@@ -358,7 +377,14 @@ namespace CSharp_CaroGame
                 StringSplitOptions.None
             );
                 string filePath = @"D:\\history.txt";
-                System.IO.File.WriteAllLines(filePath, lines);
+                if (!System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.WriteAllLines(filePath, lines);
+                }
+                else
+                {
+                    System.IO.File.WriteAllLines(filePath, lines);
+                }
                 String[] line1 = File.ReadLines(filePath).Take(11).ToArray();
                 System.IO.File.WriteAllLines(filePath, line1);
                 Label[] lb = new Label[11];
@@ -367,25 +393,25 @@ namespace CSharp_CaroGame
                 {
                     String ss = line1[i].ToString();
 
-                    if (ss.Contains("thua"))
+                    if (ss.Contains("thua") || ss.Contains("lose"))
                     {
                         lb[i] = new Label();
                         lb[i].BackColor = Color.Red;
                         lb[i].Height = 23;
                         lb[i].Width = 530;
-                        lb[i].Text = lines[i];
+                        lb[i].Text = line1[i];
                         lb[i].Location = new Point(30, 25 + (i * 30));
                         hs.panel_history.Controls.Add(lb[i]);
                         reader.Close();
 
                     }
-                    if (ss.Contains("thắng"))
+                    if (ss.Contains("thắng") || ss.Contains("win"))
                     {
                         lb[i] = new Label();
                         lb[i].BackColor = Color.Green;
                         lb[i].Height = 23;
                         lb[i].Width = 530;
-                        lb[i].Text = lines[i];
+                        lb[i].Text = line1[i];
                         lb[i].Location = new Point(30, 25 + (i * 30));
                         hs.panel_history.Controls.Add(lb[i]);
                         reader.Close();
@@ -423,6 +449,6 @@ namespace CSharp_CaroGame
             grap.Clear(panel_banco.BackColor);
             timer1.Start();
             pgb_Time.Value = 0;
-        } 
+        }
     }
 }
