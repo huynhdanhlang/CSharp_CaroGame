@@ -75,3 +75,4 @@ C:\Users\DELL\source\repos\CSharp_CaroGame\CSharp_CaroGame\obj\Debug\CSharp_Caro
 C:\Users\ASUS\source\repos\CSharp_CaroGame\CSharp_CaroGame\obj\Debug\CSharp_CaroGame.History.resources
 C:\Users\DELL\source\repos\CSharp_CaroGame\CSharp_CaroGame\obj\Debug\CSharp_CaroGame.History.resources
 C:\Users\DELL\source\repos\CSharp_CaroGame\CSharp_CaroGame\obj\Debug\CSharp_CaroGame.Sign_up.resources
+C:\Users\ASUS\source\repos\CSharp_CaroGame\CSharp_CaroGame\obj\Debug\CSharp_CaroGame.Sign_up.resources
