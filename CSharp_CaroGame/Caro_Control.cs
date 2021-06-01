@@ -61,6 +61,7 @@ namespace CSharp_CaroGame
         {
             this.username = username;
         }
+
         public void VeBanCo(Graphics g)
         {
             _BanCo.VeBanCo(g);
@@ -221,11 +222,11 @@ namespace CSharp_CaroGame
                         if (_CheDoChoi == 1)
                         {
 
-                            lb.Text = "Đánh với bạn bè Quân đen thắng";
+                            lb.Text = "Play with frient: Black player wins";
                         }
                         else if (_CheDoChoi == 3)
                         {
-                            lb.Text = "Đánh với bạn bè qua LAN Bạn thắng";
+                            lb.Text = "Play with frient in LAN: You win";
                         }
                         win = reader.GetInt32(0) + 1;
 
@@ -252,11 +253,11 @@ namespace CSharp_CaroGame
                         if (_CheDoChoi == 1)
                         {
 
-                            lb.Text = "Đánh với bạn bè Quân trắng thắng";
+                            lb.Text = "Play with frient: White player wins";
                         }
                         else if (_CheDoChoi == 3)
                         {
-                            lb.Text = "Đánh với bạn bè qua LAN Bạn thắng";
+                            lb.Text = "Play with frient in LAN: You lose";
                         }
                         win = reader.GetInt32(0) + 1;
 
@@ -280,7 +281,7 @@ namespace CSharp_CaroGame
                     if (reader.Read())
                     {
                         Label lb = new Label();
-                        lb.Text = "Đánh với máy Bạn thắng";
+                        lb.Text = "Play with computer: You win";
                         win = reader.GetInt32(0) + 1;
 
                         MySqlConnection con = MySQL_Connection.Connection;
@@ -303,7 +304,7 @@ namespace CSharp_CaroGame
                     if (reader.Read())
                     {
                         Label lb = new Label();
-                        lb.Text = "Đánh với máy Bạn thua";
+                        lb.Text = "Play with computer: You lose";
                         lose = reader.GetInt32(1) + 1;
 
                         MySqlConnection con = MySQL_Connection.Connection;

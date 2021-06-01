@@ -87,7 +87,24 @@ namespace CSharp_CaroGame
             Control.VeBanCo(grap);
             Control.VeLaiQuanCo(grap);
         }
+
         #region Mấy sự kiện Click
+        private void btn_Frient_Click(object sender, EventArgs e)
+        {
+            grap.Clear(panel_banco.BackColor);
+            Control.StartPvP(grap);
+            pgb_Time.Value = 0;
+            timer1.Start();
+        }
+
+        private void btn_Computer_Click(object sender, EventArgs e)
+        {
+            grap.Clear(panel_banco.BackColor);
+            Control.StartPvC(grap);
+            pgb_Time.Value = 0;
+            timer1.Start();
+        }
+
         private void btn_LAN_Click(object sender, EventArgs e)
         {
 
@@ -128,15 +145,26 @@ namespace CSharp_CaroGame
                         return;
                     }
                 }
+
                 else if (Control.CheDoChoi == 2)
                 {
-                    Control.MayDanh(grap);
                     if (Control.KiemTraChienThang())
                     {
                         timer1.Stop();
                         Control.ThongBaoKetThuc();
                         return;
                     }
+                    else
+                    {
+                        Control.MayDanh(grap);
+                        if (Control.KiemTraChienThang())
+                        {
+                            timer1.Stop();
+                            Control.ThongBaoKetThuc();
+                            return;
+                        }
+                    }
+                    
                 }
 
                 else if (Control.CheDoChoi == 3)
@@ -192,7 +220,7 @@ namespace CSharp_CaroGame
 
                 case (int)SocketCommand.QUIT:
                     timer1.Stop();
-                    MessageBox.Show("Người chơi đã thoát!");
+                    MessageBox.Show("The opponent has left the match!");
                     Control._SanSang = false;
 
                     break;
@@ -243,29 +271,22 @@ namespace CSharp_CaroGame
                 }
             }
         }
-        private void btn_Frient_Click(object sender, EventArgs e)
-        {
-            grap.Clear(panel_banco.BackColor);
-            Control.StartPvP(grap);
-            pgb_Time.Value = 0;
-            timer1.Start();
-        }
-
+        
         private void btn_Replay_Click(object sender, EventArgs e)
         {
 
             if (Control.CheDoChoi == 0)
             {
-                MessageBox.Show("Chưa chọn chế độ chơi!", "Thông báo");
+                MessageBox.Show("Haven't selected game mode!", "Notification");
             }
             else if (Control.CheDoChoi == 1)
             {
-                grap.Clear(panel_banco.BackColor);
+                Reset();
                 Control.StartPvP(grap);
             }
             else if (Control.CheDoChoi == 2)
             {
-                grap.Clear(panel_banco.BackColor);
+                Reset();
                 Control.StartPvC(grap);
             }
             else if (Control.CheDoChoi == 3)
@@ -274,19 +295,12 @@ namespace CSharp_CaroGame
                 grap.Clear(panel_banco.BackColor);
                 Control.StartLAN(grap);
                 panel_banco.Enabled = true;
+                timer1.Start();
+                pgb_Time.Value = 0;
             }
-
-            timer1.Start();
-            pgb_Time.Value = 0;
         }
 
-        private void btn_Computer_Click(object sender, EventArgs e)
-        {
-            grap.Clear(panel_banco.BackColor);
-            Control.StartPvC(grap);
-            pgb_Time.Value = 0;
-            timer1.Start();
-        }
+        
         #endregion
 
         #region Undo, Redo
@@ -407,5 +421,12 @@ namespace CSharp_CaroGame
                 textBox_IP.Text = socket.GetLocalIPv4(NetworkInterfaceType.Ethernet);
             }
         }
+
+        private void Reset()
+        {
+            grap.Clear(panel_banco.BackColor);
+            timer1.Start();
+            pgb_Time.Value = 0;
+        } 
     }
 }
