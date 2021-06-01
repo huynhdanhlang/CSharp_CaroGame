@@ -165,7 +165,7 @@ namespace CSharp_CaroGame
                 _BanCo.XoaQuanCo(g, oco.ViTri, sbGreen);
                 LuotDi = (LuotDi == 1) ? 2 : 1;
 
-                if (CheDoChoi == 2)
+                if (CheDoChoi == 2 || CheDoChoi == 3)
                 {
                     O_Co oco2 = stk_CacNuocDaDi.Pop();
 
@@ -188,7 +188,7 @@ namespace CSharp_CaroGame
                 _BanCo.VeQuanCo(g, oco.ViTri, oco.SoHuu == 1 ? sbBlack : sbWhite);
                 LuotDi = (LuotDi == 1) ? 2 : 1;
 
-                if (CheDoChoi == 2)
+                if (CheDoChoi == 2 || CheDoChoi == 3)
                 {
                     O_Co oco2 = stk_CacNuocDaUndo.Pop();
 
