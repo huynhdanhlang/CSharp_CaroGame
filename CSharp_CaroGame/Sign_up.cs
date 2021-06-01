@@ -47,7 +47,8 @@ namespace CSharp_CaroGame
                             "VALUES('" + txt_Name.Text + "', '" + username + "', '" + password + "')";
                         cmd = new MySqlCommand(query, con);
                         cmd.ExecuteNonQuery();
-                        MessageBox.Show("Lưu thành công.  Đùa đấy : ))");
+                        MessageBox.Show("Save successfully");
+                        this.Close();
                     }
                     catch (Exception ex)
                     {
@@ -63,12 +64,12 @@ namespace CSharp_CaroGame
             if (username.Trim().Equals("") || password.Trim().Equals("") ||
                 confirm.Trim().Equals(""))
             {
-                MessageBox.Show("Info not valid. Please input again");
+                MessageBox.Show("Info not valid. Please input again!");
                 return false;
             }
             else if (!confirm.Equals(password))
             {
-                MessageBox.Show("Password don't match. Please check again");
+                MessageBox.Show("Password don't match. Please check again!");
                 return false;
             }
             return true;           

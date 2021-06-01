@@ -123,7 +123,7 @@ namespace CSharp_CaroGame
                 socket.isServer = false;
                 panel_banco.Enabled = false;
                 Listen();
-                MessageBox.Show("Kết nối thành công. Trận đấu sẵn sàng");
+                MessageBox.Show("Successful connection. Match ready.");
             }
             timer1.Stop();
             pgb_Time.Value = 0;
@@ -164,7 +164,6 @@ namespace CSharp_CaroGame
                             return;
                         }
                     }
-                    
                 }
 
                 else if (Control.CheDoChoi == 3)
@@ -179,12 +178,9 @@ namespace CSharp_CaroGame
                         return;
                     }
                 }
-
+                timer1.Start();
+                pgb_Time.Value = 0;
             }
-
-            timer1.Start();
-            pgb_Time.Value = 0;
-
         }
 
         void Listen()
@@ -307,8 +303,8 @@ namespace CSharp_CaroGame
         private void btn_Undo_Click(object sender, EventArgs e)
         {
             Control.Undo(grap);
-            timer1.Start();
-            pgb_Time.Value = 0;
+            //timer1.Start();
+            //pgb_Time.Value = 0;
             if (Control.CheDoChoi == 3)
             {
                 socket.Send(new SocketData((int)SocketCommand.UNDO, "", new Point()));
@@ -318,8 +314,8 @@ namespace CSharp_CaroGame
         private void btn_Redo_Click(object sender, EventArgs e)
         {
             Control.Redo(grap);
-            timer1.Start();
-            pgb_Time.Value = 0;
+            //timer1.Start();
+            //pgb_Time.Value = 0;
             if (Control.CheDoChoi == 3)
             {
                 socket.Send(new SocketData((int)SocketCommand.REDO, "", new Point()));

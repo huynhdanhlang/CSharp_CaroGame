@@ -325,6 +325,7 @@ namespace CSharp_CaroGame
 
             }
             _SanSang = false;
+
         }
 
         public bool KiemTraChienThang()
