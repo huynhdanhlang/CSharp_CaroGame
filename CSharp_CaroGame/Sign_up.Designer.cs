@@ -86,7 +86,7 @@ namespace CSharp_CaroGame
             // txt_Name
             // 
             this.txt_Name.Location = new System.Drawing.Point(104, 41);
-            this.txt_Name.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txt_Name.Margin = new System.Windows.Forms.Padding(2);
             this.txt_Name.Name = "txt_Name";
             this.txt_Name.Size = new System.Drawing.Size(146, 20);
             this.txt_Name.TabIndex = 7;
@@ -95,7 +95,7 @@ namespace CSharp_CaroGame
             // txt_Username
             // 
             this.txt_Username.Location = new System.Drawing.Point(104, 67);
-            this.txt_Username.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txt_Username.Margin = new System.Windows.Forms.Padding(2);
             this.txt_Username.Name = "txt_Username";
             this.txt_Username.Size = new System.Drawing.Size(146, 20);
             this.txt_Username.TabIndex = 8;
@@ -104,16 +104,17 @@ namespace CSharp_CaroGame
             // txt_Password
             // 
             this.txt_Password.Location = new System.Drawing.Point(104, 93);
-            this.txt_Password.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txt_Password.Margin = new System.Windows.Forms.Padding(2);
             this.txt_Password.Name = "txt_Password";
             this.txt_Password.Size = new System.Drawing.Size(146, 20);
             this.txt_Password.TabIndex = 9;
+            this.txt_Password.UseSystemPasswordChar = true;
             this.txt_Password.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_Password_KeyDown);
             // 
             // btn_Ok
             // 
             this.btn_Ok.Location = new System.Drawing.Point(194, 158);
-            this.btn_Ok.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_Ok.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Ok.Name = "btn_Ok";
             this.btn_Ok.Size = new System.Drawing.Size(56, 19);
             this.btn_Ok.TabIndex = 13;
@@ -134,10 +135,11 @@ namespace CSharp_CaroGame
             // txt_Confirm
             // 
             this.txt_Confirm.Location = new System.Drawing.Point(104, 123);
-            this.txt_Confirm.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txt_Confirm.Margin = new System.Windows.Forms.Padding(2);
             this.txt_Confirm.Name = "txt_Confirm";
             this.txt_Confirm.Size = new System.Drawing.Size(146, 20);
             this.txt_Confirm.TabIndex = 15;
+            this.txt_Confirm.UseSystemPasswordChar = true;
             this.txt_Confirm.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_Confirm_KeyDown);
             // 
             // Sign_up
@@ -155,7 +157,7 @@ namespace CSharp_CaroGame
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Sign_up";
             this.Text = "Sign up";
             this.ResumeLayout(false);
