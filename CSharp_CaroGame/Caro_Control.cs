@@ -165,7 +165,7 @@ namespace CSharp_CaroGame
                 _BanCo.XoaQuanCo(g, oco.ViTri, sbGreen);
                 LuotDi = (LuotDi == 1) ? 2 : 1;
 
-                if (CheDoChoi == 2 || CheDoChoi == 3)
+                if (CheDoChoi == 2)
                 {
                     O_Co oco2 = stk_CacNuocDaDi.Pop();
 
@@ -188,7 +188,7 @@ namespace CSharp_CaroGame
                 _BanCo.VeQuanCo(g, oco.ViTri, oco.SoHuu == 1 ? sbBlack : sbWhite);
                 LuotDi = (LuotDi == 1) ? 2 : 1;
 
-                if (CheDoChoi == 2 || CheDoChoi == 3)
+                if (CheDoChoi == 2)
                 {
                     O_Co oco2 = stk_CacNuocDaUndo.Pop();
 
@@ -208,7 +208,7 @@ namespace CSharp_CaroGame
             cmd = new MySqlCommand(query, conn);
             reader = cmd.ExecuteReader();
             string text = File.ReadAllText(@"D:\\history.txt");
-            String thua = "";
+
             switch (KetThuc)
             {
                 case KETTHUC.Draw:
@@ -227,14 +227,13 @@ namespace CSharp_CaroGame
                         }
                         else if (_CheDoChoi == 3)
                         {
-                            lb.Text = "Play with friend in LAN: You win";
-                            thua = "Play with friend in LAN: You lose";
+                            lb.Text = "Play with friend in LAN: Balck player win";
+
                         }
                         win = reader.GetInt32(0) + 1;
                         MySqlConnection con = MySQL_Connection.Connection;
                         String str = "Update user set num_win=" + win + " where username = '" + this.username + "'";
-                        String up = "Update user set history=CONCAT('" + "\n" + lb.Text + " " + DateTime.Now.ToString() + "',history) where username = '" + this.username1 + "'";
-                        String up1 = "Update user set history=CONCAT('" + "\n" + thua + " " + DateTime.Now.ToString() + "',history) where username = '" + this.username + "'";
+                        String up = "Update user set history=CONCAT('" + "\n" + lb.Text + " " + DateTime.Now.ToString() + "',history) where username = '" + this.username + "'";
                         String uptext = "Update user set history='" + text + "' where username = '" + this.username + "'";
                         cmd = new MySqlCommand(str, con);
                         reader.Close();
@@ -242,8 +241,6 @@ namespace CSharp_CaroGame
                         cmd = new MySqlCommand(uptext, conn);
                         cmd.ExecuteNonQuery();
                         cmd = new MySqlCommand(up, conn);
-                        cmd.ExecuteNonQuery();
-                        cmd = new MySqlCommand(up1, conn);
                         cmd.ExecuteNonQuery();
                         conn.Close();
                     }
@@ -261,16 +258,14 @@ namespace CSharp_CaroGame
                         }
                         else if (_CheDoChoi == 3)
                         {
-                            lb.Text = "Play with friend in LAN: You win";
-                            thua = "Play with friend in LAN: You lose";
+                            lb.Text = "Play with friend in LAN: White player win";
+
 
                         }
                         win = reader.GetInt32(0) + 1;
-
                         MySqlConnection con = MySQL_Connection.Connection;
                         String str = "Update user set num_win=" + win + " where username = '" + this.username + "'";
-                        String up = "Update user set history=CONCAT('" + "\n" + lb.Text + " " + DateTime.Now.ToString() + "',history) where username = '" + this.username1 + "'";
-                        String up1 = "Update user set history=CONCAT('" + "\n" + thua + " " + DateTime.Now.ToString() + "',history) where username = '" + this.username + "'";
+                        String up = "Update user set history=CONCAT('" + "\n" + lb.Text + " " + DateTime.Now.ToString() + "',history) where username = '" + this.username + "'";
                         String uptext = "Update user set history='" + text + "' where username = '" + this.username + "'";
                         cmd = new MySqlCommand(str, con);
                         reader.Close();
@@ -278,8 +273,6 @@ namespace CSharp_CaroGame
                         cmd = new MySqlCommand(uptext, conn);
                         cmd.ExecuteNonQuery();
                         cmd = new MySqlCommand(up, conn);
-                        cmd.ExecuteNonQuery();
-                        cmd = new MySqlCommand(up1, conn);
                         cmd.ExecuteNonQuery();
                         conn.Close();
                     }
