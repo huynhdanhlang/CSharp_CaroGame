@@ -25,7 +25,7 @@ namespace CSharp_CaroGame
         public static int cdInterval = 100;
         public Form_CoCaRo()
         {
-
+            
             InitializeComponent();
             Control = new Caro_Control();
             socket = new SocketManager();
@@ -55,7 +55,6 @@ namespace CSharp_CaroGame
             {
                 if (dlr == DialogResult.Yes)
                 {
-
                     Application.Exit();
                 }
             }
@@ -75,12 +74,6 @@ namespace CSharp_CaroGame
             }
 
         }
-        private void Form_CoCaRo_Load(object sender, EventArgs e)
-        {
-            btn_Redo.Visible = true;
-            btn_Undo.Visible = true;
-            pgb_Time.Visible = true;
-        }
 
         private void Draw_Panel_Paint(object sender, PaintEventArgs e)
         {
@@ -91,32 +84,56 @@ namespace CSharp_CaroGame
         #region Mấy sự kiện Click
         private void btn_Frient_Click(object sender, EventArgs e)
         {
-            grap.Clear(panel_banco.BackColor);
+            if (Control.CheDoChoi == 3)
+            {
+                try
+                {
+                    socket.Send(new SocketData((int)SocketCommand.QUIT, "", new Point()));
+                    
+                }
+                catch { }
+            }
             Control.StartPvP(grap);
-            pgb_Time.Value = 0;
-            timer1.Start();
+            Reset();
+
+            panel_banco.Enabled = true;
+            btn_LAN.Enabled = true;
+            btn_Undo.Enabled = true;
+            btn_Redo.Enabled = true;
         }
 
         private void btn_Computer_Click(object sender, EventArgs e)
         {
-            grap.Clear(panel_banco.BackColor);
+            if (Control.CheDoChoi == 3)
+            {
+                try
+                {
+                    socket.Send(new SocketData((int)SocketCommand.QUIT, "", new Point()));
+                    
+                }
+                catch { }
+            }
             Control.StartPvC(grap);
-            pgb_Time.Value = 0;
-            timer1.Start();
+            Reset();
+            
+            panel_banco.Enabled = true;
+            btn_LAN.Enabled = true;
+            btn_Undo.Enabled = true;
+            btn_Redo.Enabled = true;
         }
 
         private void btn_LAN_Click(object sender, EventArgs e)
         {
-
+            btn_LAN.Enabled = false;
             grap.Clear(panel_banco.BackColor);
             Control.StartLAN(grap);
             socket.IP = textBox_IP.Text;
             if (!socket.ConnectServer())
             {
                 socket.isServer = true;
-                panel_banco.Enabled = true;
+                panel_banco.Enabled = false;
                 socket.CreateServer();
-
+                Listen();
             }
             else
             {
@@ -125,6 +142,7 @@ namespace CSharp_CaroGame
                 Listen();
                 MessageBox.Show("Successful connection. Match ready.");
             }
+            
             timer1.Stop();
             pgb_Time.Value = 0;
         }
@@ -170,6 +188,8 @@ namespace CSharp_CaroGame
                 {
                     panel_banco.Enabled = false;
                     socket.Send(new SocketData((int)SocketCommand.SEND_POINT, "", e.Location));
+                    btn_Undo.Enabled = false;
+                    btn_Redo.Enabled = false;
                     Listen();
                     if (Control.KiemTraChienThang())
                     {
@@ -209,17 +229,32 @@ namespace CSharp_CaroGame
                 case (int)SocketCommand.NEW_GAME:
                     this.Invoke((MethodInvoker)(() =>
                     {
-
                         NewGame();
                         panel_banco.Enabled = false;
                     }));
                     break;
 
-                case (int)SocketCommand.QUIT:
-                    timer1.Stop();
-                    MessageBox.Show("The opponent has left the match!");
-                    Control._SanSang = false;
+                /*case (int)SocketCommand.CALL_NEW_GAME:
+                    this.Invoke((MethodInvoker)(() =>
+                    {
+                        //Control._SanSang = true;
+                        panel_banco.Enabled = true;
+                        MessageBox.Show("Successful connection. Match ready. Trả lời lại");
+                        //panel_banco.Enabled = false;
+                    }));
+                    break;*/
 
+                case (int)SocketCommand.QUIT:
+                    this.Invoke((MethodInvoker)(() =>
+                    {
+                        timer1.Stop();
+                        MessageBox.Show("The opponent has left the match!");
+
+                        Control._SanSang = false;
+                        btn_Undo.Enabled = false;
+                        btn_Redo.Enabled = false;
+                    }));
+                    
                     break;
 
                 case (int)SocketCommand.SEND_POINT:
@@ -228,6 +263,9 @@ namespace CSharp_CaroGame
                         pgb_Time.Value = 0;
                         timer1.Start();
                         OtherPlayerMark(data.Point);
+
+                        btn_Undo.Enabled = true;
+                        btn_Redo.Enabled = true;
                     }));
 
                     break;
@@ -275,7 +313,7 @@ namespace CSharp_CaroGame
 
             if (Control.CheDoChoi == 0)
             {
-                MessageBox.Show("Haven't selected game mode!", "Notification");
+                MessageBox.Show("Please choose game mode!", "Notification");
             }
             else if (Control.CheDoChoi == 1)
             {
@@ -432,6 +470,22 @@ namespace CSharp_CaroGame
             grap.Clear(panel_banco.BackColor);
             timer1.Start();
             pgb_Time.Value = 0;
+        }
+
+        private void Form_CoCaRo_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (MessageBox.Show("Do you want to exit?", "Notification", MessageBoxButtons.OKCancel) != System.Windows.Forms.DialogResult.OK)
+            { 
+                e.Cancel = true;
+            }
+            else if (Control.CheDoChoi == 3)
+            {
+                try
+                {
+                    socket.Send(new SocketData((int)SocketCommand.QUIT, "", new Point()));
+                }
+                catch { }
+            }
         }
     }
 }

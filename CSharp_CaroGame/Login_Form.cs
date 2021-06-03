@@ -62,16 +62,13 @@ namespace CSharp_CaroGame
                 Form_CoCaRo frm_caro = new Form_CoCaRo();
                 frm_caro.initForm(username);
                 frm_caro.Closed += (s, args) => this.Close();
-                conn.Close();
                 frm_caro.Show();
-                conn.Close();
-
             }
             else
             {
                 MessageBox.Show("Info not valid. Please input again");
             }
-
+            conn.Close();
         }
     }
 }

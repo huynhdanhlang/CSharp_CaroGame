@@ -68,6 +68,7 @@ namespace CSharp_CaroGame
         QUIT,
         END_GAME,
         UNDO,
-        REDO
+        REDO,
+        CALL_NEW_GAME
     }
 }

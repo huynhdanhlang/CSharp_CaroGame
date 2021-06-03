@@ -150,7 +150,6 @@ namespace CSharp_CaroGame
             stk_CacNuocDaUndo = new Stack<O_Co>();
             KhoiTaoMangOCo();
             VeBanCo(g);
-
         }
 
         #region Undo, Redo
@@ -327,7 +326,7 @@ namespace CSharp_CaroGame
 
             }
             _SanSang = false;
-
+            
         }
 
         public bool KiemTraChienThang()
